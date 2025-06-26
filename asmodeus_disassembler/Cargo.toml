@@ -7,4 +7,4 @@ edition = "2021"
 thiserror = "1.0"
 
 [dev-dependencies]
-asmodeus_assembler = { path = "../asmodeus_assembler" }
+hephasm = { path = "../hephasm" }

@@ -9,7 +9,7 @@ use asmachina::{MachineW, MachineError};
 use std::io::{self, Write};
 use asmodeus_lexer::{tokenize, Token};
 use asmodeus_parser::{parse, ast::{Program, ProgramElement}};
-use asmodeus_assembler::assemble_program;
+use hephasm::assemble_program;
 use asmodeus_disassembler::disassemble;
 
 #[derive(Debug)]
@@ -17,7 +17,7 @@ enum AsmodeusError {
     IoError(std::io::Error),
     LexerError(asmodeus_lexer::LexerError),
     ParserError(asmodeus_parser::ParserError),
-    AssemblerError(asmodeus_assembler::AssemblerError),
+    AssemblerError(hephasm::AssemblerError),
     MachineError(asmachina::MachineError),
     DisassemblerError(asmodeus_disassembler::DisassemblerError),
     UsageError(String),
@@ -57,8 +57,8 @@ impl From<asmodeus_parser::ParserError> for AsmodeusError {
     }
 }
 
-impl From<asmodeus_assembler::AssemblerError> for AsmodeusError {
-    fn from(error: asmodeus_assembler::AssemblerError) -> Self {
+impl From<hephasm::AssemblerError> for AsmodeusError {
+    fn from(error: hephasm::AssemblerError) -> Self {
         AsmodeusError::AssemblerError(error)
     }
 }

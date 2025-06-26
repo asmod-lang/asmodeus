@@ -3,7 +3,7 @@ members = [
     "asmachina",
     "asmodeus_lexer", 
     "asmodeus_parser",
-    "asmodeus_assembler",
+    "hephasm",
     "asmodeus_disassembler"
 ]
 
@@ -16,7 +16,7 @@ edition = "2021"
 asmachina = { path = "asmachina" }
 asmodeus_lexer = { path = "asmodeus_lexer" }
 asmodeus_parser = { path = "asmodeus_parser" }
-asmodeus_assembler = { path = "asmodeus_assembler" }
+hephasm = { path = "hephasm" }
 asmodeus_disassembler = { path = "asmodeus_disassembler" }
 clap = { version = "4.0", features = ["derive"] }
 anyhow = "1.0"

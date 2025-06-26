@@ -1,5 +1,5 @@
 use asmodeus_disassembler::{disassemble, disassemble_to_string, Disassembler, AdvancedDisassembler, DisassemblerError};
-use asmodeus_assembler::assemble_source;
+use hephasm::assemble_source;
 
 #[test]
 fn test_simple_instruction_disassembly() {

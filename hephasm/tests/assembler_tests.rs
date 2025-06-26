@@ -1,4 +1,4 @@
-use asmodeus_assembler::{assemble_source, assemble_program, Assembler, AssemblerError};
+use hephasm::{assemble_source, assemble_program, Assembler, AssemblerError};
 use asmodeus_parser::parse_source;
 
 #[test]

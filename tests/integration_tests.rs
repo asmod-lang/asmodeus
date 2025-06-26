@@ -7,7 +7,7 @@ use std::process::Command;
 use asmachina::{MachineW, MachineError};
 use asmodeus_lexer::tokenize;
 use asmodeus_parser::parse;
-use asmodeus_assembler::assemble_program;
+use hephasm::assemble_program;
 use asmodeus_disassembler::disassemble;
 
 #[test]

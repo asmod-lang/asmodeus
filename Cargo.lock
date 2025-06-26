@@ -71,20 +71,11 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "asmachina",
- "asmodeus_assembler",
  "asmodeus_disassembler",
  "asmodeus_lexer",
  "asmodeus_parser",
  "clap",
- "thiserror",
-]
-
-[[package]]
-name = "asmodeus_assembler"
-version = "0.1.0"
-dependencies = [
- "asmodeus_lexer",
- "asmodeus_parser",
+ "hephasm",
  "thiserror",
 ]
 
@@ -92,7 +83,7 @@ dependencies = [
 name = "asmodeus_disassembler"
 version = "0.1.0"
 dependencies = [
- "asmodeus_assembler",
+ "hephasm",
  "thiserror",
 ]
 
@@ -162,6 +153,15 @@ name = "heck"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
+
+[[package]]
+name = "hephasm"
+version = "0.1.0"
+dependencies = [
+ "asmodeus_lexer",
+ "asmodeus_parser",
+ "thiserror",
+]
 
 [[package]]
 name = "is_terminal_polyfill"
