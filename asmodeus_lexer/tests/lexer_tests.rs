@@ -16,11 +16,11 @@ fn test_whitespace_handling() {
 
 #[test]
 fn test_keywords() {
-    let input = "DOD ODE ŁAD LAD POB SOB SOM STP DNS PZS SDP CZM MSK PWR WEJSCIE WYJSCIE";
+    let input = "DOD ODE ŁAD LAD POB SOB SOM SOZ STP DNS PZS SDP CZM MSK PWR WEJSCIE WYJSCIE";
     let tokens = tokenize(input).unwrap();
     
     let expected_keywords = vec![
-        "DOD", "ODE", "ŁAD", "LAD", "POB", "SOB", "SOM", "STP", 
+        "DOD", "ODE", "ŁAD", "LAD", "POB", "SOB", "SOM", "SOZ", "STP", 
         "DNS", "PZS", "SDP", "CZM", "MSK", "PWR", "WEJSCIE", "WYJSCIE"
     ];
     
