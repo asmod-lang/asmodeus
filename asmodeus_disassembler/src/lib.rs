@@ -102,21 +102,21 @@ impl Disassembler {
             let argument = word & 0b0000011111111111;
 
             match opcode {
-                0b00101 | 0b00110 => {
-                    // SOB (unconditional jump) or SOM (conditional jump)
+                0b00101 | 0b00110 | 0b10000 => {
+                    // SOB (unconditional jump), SOM (conditional jump), or SOZ (conditional jump)
                     self.jump_targets.insert(argument);
                 }
-                0b00001..=0b00111 | 0b01000..=0b01111 => {
+                0b00001..=0b00111 | 0b01000..=0b01111 | 0b10000 => {
                     // valid instruction opcodes - only mark as data if it looks like data access
                     if self.is_valid_address(argument) && 
                        self.could_be_data_reference(opcode as u8) &&
                        argument < machine_code.len() as u16 {
                         // only mark as data if its not a jump target and looks like actual data
                         if !self.jump_targets.contains(&argument) {
-                            // if the target looks like an instruction or data
+                            // target looks like an instruction or data
                             let target_word = machine_code[argument as usize];
                             let target_opcode = (target_word >> 11) & 0b11111;
-                            if target_opcode > 0b01111 {
+                            if target_opcode > 0b10000 {
                                 // invalid opcode, likely data
                                 self.data_addresses.insert(argument);
                             }
@@ -175,6 +175,7 @@ impl Disassembler {
             0b00100 => ("POB".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
             0b00101 => ("SOB".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
             0b00110 => ("SOM".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
+            0b10000 => ("SOZ".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
             0b00111 => ("STP".to_string(), None, false),
             0b01000 => ("DNS".to_string(), None, false),
             0b01001 => ("PZS".to_string(), None, false),
@@ -263,7 +264,7 @@ impl Disassembler {
 
     fn detect_addressing_mode(&self, opcode: u8, _argument: u16) -> AddressingMode {
         match opcode {
-            0b00101 | 0b00110 => AddressingMode::Direct, // jump instructions
+            0b00101 | 0b00110 | 0b10000 => AddressingMode::Direct, // jump instructions
             0b01100 => AddressingMode::Direct, // MSK
             0b01110 | 0b01111 => AddressingMode::Direct, // I/O
             _ => {

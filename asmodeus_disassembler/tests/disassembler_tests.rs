@@ -353,3 +353,29 @@ fn test_label_uniqueness() {
     assert!(disasm_text.contains("SOB L_0006"));
     assert!(disasm_text.contains("SOB L_0007"));
 }
+
+#[test]
+fn test_soz_instruction() {
+    let machine_code = vec![
+        (0b10000 << 11) | 100,
+    ];
+    
+    let result = disassemble(&machine_code).unwrap();
+    assert_eq!(result.len(), 1);
+    assert!(result[0].contains("SOZ"));
+    assert!(result[0].contains("L_0064"));
+}
+
+#[test]
+fn test_soz_jump_labels() {
+    let machine_code = vec![
+        (0b10000 << 11) | 3,   // SOZ 3 (conditional jump to address 3)
+        (0b00001 << 11) | 0,   // DOD 0
+        (0b00001 << 11) | 1,   // DOD 1
+        (0b00111 << 11) | 0,   // STP (target of jump)
+    ];
+    let result = disassemble(&machine_code).unwrap();
+    let disasm_text = result.join("\n");
+    assert!(disasm_text.contains("L_0003:"));
+    assert!(disasm_text.contains("SOZ L_0003"));
+}
