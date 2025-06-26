@@ -311,6 +311,7 @@ impl Assembler {
             "POB" => Ok(0b00100),
             "SOB" => Ok(0b00101),
             "SOM" => Ok(0b00110),
+            "SOZ" => Ok(0b10000),
             "STP" => Ok(0b00111),
             "DNS" => Ok(0b01000),
             "PZS" => Ok(0b01001),

@@ -370,3 +370,28 @@ fn test_program_with_only_labels() {
     "#).unwrap();
     assert_eq!(machine_code.len(), 0);
 }
+
+
+#[test]
+fn test_soz_instruction() {
+    let machine_code = assemble_source("SOZ 100").unwrap();
+    assert_eq!(machine_code.len(), 1);
+
+    let expected = (0b10000u16 << 11) | 100;
+    assert_eq!(machine_code[0], expected);
+}
+
+#[test]
+fn test_soz_with_label() {
+    let machine_code = assemble_source(r#"
+        start:
+            SOZ end
+            DOD 100
+        end:
+            STP
+    "#).unwrap();
+    assert_eq!(machine_code.len(), 3);
+
+    let expected_soz = (0b10000u16 << 11) | 2;
+    assert_eq!(machine_code[0], expected_soz);
+}
