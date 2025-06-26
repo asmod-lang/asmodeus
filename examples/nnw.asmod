@@ -1,0 +1,31 @@
+//int NNW(int a, int b)
+//main
+          POB a
+          ŁAD a1
+          POB b
+          ŁAD b1
+loop:     POB a1
+          ODE b1
+          SOZ koniec
+          POB b1
+          ODE a1
+          SOM tak
+//jezeli a1 > b1 skocz do 'tak', jezeli nie kontynuuj
+          POB a1
+          DOD a
+          ŁAD a1
+          SOB loop
+tak:      POB b1
+          DOD b
+          ŁAD b1
+          SOB loop
+//koniec programu
+koniec:   POB a1
+          WYJSCIE
+          STP
+//zmienne uzytkownika
+a:        RST 14
+b:        RST 12
+//zmienne programu
+a1:       RPA
+b1:       RPA
