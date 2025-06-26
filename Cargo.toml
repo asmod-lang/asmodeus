@@ -1,0 +1,27 @@
+[workspace]
+members = [
+    "asmodeus_core",
+    "asmodeus_lexer", 
+    "asmodeus_parser",
+    "asmodeus_assembler",
+    "asmodeus_disassembler"
+]
+
+[package]
+name = "asmodeus"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+asmodeus_core = { path = "asmodeus_core" }
+asmodeus_lexer = { path = "asmodeus_lexer" }
+asmodeus_parser = { path = "asmodeus_parser" }
+asmodeus_assembler = { path = "asmodeus_assembler" }
+asmodeus_disassembler = { path = "asmodeus_disassembler" }
+clap = { version = "4.0", features = ["derive"] }
+anyhow = "1.0"
+thiserror = "1.0"
+
+[[bin]]
+name = "asmodeus"
+path = "src/main.rs"
