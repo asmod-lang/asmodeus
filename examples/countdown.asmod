@@ -1,0 +1,18 @@
+; Countdown program
+; Counts from 3 down to 0 and outputs each value
+
+start:
+    POB counter     ; Load counter
+    WYJSCIE         ; Output current value
+    POB counter     ; Load counter again
+    ODE one         ; Subtract 1
+    ŁAD counter     ; Store back to counter
+    POB counter     ; Load updated counter
+    SOM end         ; Jump to end if counter < 0 (reached -1)
+    SOB start       ; Otherwise continue loop
+    
+end:
+    STP             ; Stop
+
+counter: RST 3      ; Start counting from 3
+one: RST 1          ; Constant 1 for subtraction

@@ -1,0 +1,6 @@
+; File with parser error
+; Missing operand for instruction
+
+start:
+    POB             ; Missing operand - parser error
+    STP
