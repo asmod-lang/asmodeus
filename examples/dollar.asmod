@@ -1,0 +1,28 @@
+; Count '$' characters in input
+; Reads characters until count reaches threshold
+
+start:
+loop:   POB remaining   ; Load remaining characters to read
+        ODE one         ; Subtract 1
+        SOM end         ; If negative, we're done
+        LAD remaining   ; Store back
+        
+        WPR             ; Read character
+        ODE dollar      ; Subtract '$' ASCII value (36)
+        SOM found       ; If zero (found '$'), increment counter
+        SOB loop        ; Continue loop
+        
+found:  POB count       ; Load counter
+        DOD one         ; Increment it  
+        LAD count       ; Store back
+        SOB loop        ; Continue loop
+
+end:    POB count       ; Load final count
+        WYJSCIE         ; Output count as number
+        STP             ; Stop
+
+; Variables
+count:      RST 0       ; Counter for '$' characters
+dollar:     RST 36      ; ASCII value of '$'  
+one:        RST 1       ; Constant 1
+remaining:  RST 10      ; Number of characters to read
