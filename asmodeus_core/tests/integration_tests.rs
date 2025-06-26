@@ -488,3 +488,45 @@ fn test_invalid_opcode() {
     let result = machine.step();
     assert!(matches!(result, Err(MachineError::InvalidOpcode { opcode: 31 })));
 }
+
+#[test]
+fn test_soz_instruction_jump_when_zero() {
+    let mut machine = MachineW::new();
+    
+    machine.ak = 0;
+    let soz_instruction = (0b10000 << 11) | 500;
+    machine.memory[0] = soz_instruction;
+    machine.l = 0;
+    machine.is_running = true;
+    
+    assert!(machine.step().is_ok());
+    assert_eq!(machine.l, 500); // L set to target address (jump taken)
+}
+
+#[test]
+fn test_soz_instruction_no_jump_when_nonzero() {
+    let mut machine = MachineW::new();
+    
+    machine.ak = 100;
+    let soz_instruction = (0b10000 << 11) | 500;
+    machine.memory[0] = soz_instruction;
+    machine.l = 0;
+    machine.is_running = true;
+    
+    assert!(machine.step().is_ok());
+    assert_eq!(machine.l, 1); // L incremented normally (no jump)
+}
+
+#[test]
+fn test_soz_instruction_no_jump_when_negative() {
+    let mut machine = MachineW::new();
+    
+    machine.ak = 0x8000;
+    let soz_instruction = (0b10000 << 11) | 500;
+    machine.memory[0] = soz_instruction;
+    machine.l = 0;
+    machine.is_running = true;
+    
+    assert!(machine.step().is_ok());
+    assert_eq!(machine.l, 1); // L incremented normally (no jump)
+}

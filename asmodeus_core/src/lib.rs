@@ -289,6 +289,7 @@ impl MachineW {
             0b00100 => self.execute_pob(), // POB - Load
             0b00101 => self.execute_sob(), // SOB - Unconditional jump
             0b00110 => self.execute_som(), // SOM - Conditional jump
+            0b10000 => self.execute_soz(), // SOZ - Jump if zero
             0b00111 => self.execute_stp(), // STP - Stop
             0b01000 => self.execute_dns(), // DNS - Disable interrupts
             0b01001 => self.execute_pzs(), // PZS - Pop from stack
@@ -337,6 +338,15 @@ impl MachineW {
     fn execute_som(&mut self) -> Result<(), MachineError> {
         // checking if the AK value is negative 
         if (self.ak & 0x8000) != 0 {
+            self.l = self.ad & 0b0000011111111111;
+        }
+        Ok(())
+    }
+
+    /// SOZ - Conditional jump: (AD) → L, when (AK) = 0
+    fn execute_soz(&mut self) -> Result<(), MachineError> {
+        // AK == zero
+        if self.ak == 0 {
             self.l = self.ad & 0b0000011111111111;
         }
         Ok(())
