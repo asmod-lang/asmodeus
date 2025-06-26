@@ -459,7 +459,7 @@ mod cli_tests {
         
         let stdout = String::from_utf8_lossy(&output.stdout);
         assert!(stdout.contains("Program execution completed successfully"));
-        assert!(stdout.contains("AK (Accumulator): 42"));
+        assert!(stdout.contains("AK: 002A (42)"));
     }
 
     #[test]
@@ -473,7 +473,7 @@ mod cli_tests {
         
         let stdout = String::from_utf8_lossy(&output.stdout);
         assert!(stdout.contains("Program execution completed successfully"));
-        assert!(stdout.contains("AK (Accumulator): 42")); // 25 + 17 = 42
+        assert!(stdout.contains("AK: 002A (42)"));
     }
 
     #[test]
@@ -651,11 +651,11 @@ mod cli_tests {
             .output()
             .expect("Failed to execute command");
 
-        assert!(output.status.success());
+        assert!(!output.status.success());
         
-        let stdout = String::from_utf8_lossy(&output.stdout);
-        assert!(stdout.contains("Asmodeus - Machine W Emulator and Assembler"));
-        assert!(stdout.contains("Usage:"));
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        assert!(stderr.contains("No arguments provided"));
+        assert!(stderr.contains("Use --help for usage information"));
     }
 
     #[test]
