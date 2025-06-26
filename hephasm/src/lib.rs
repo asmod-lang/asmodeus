@@ -1,7 +1,7 @@
 //! Assembler for Asmodeus assembly language
 //! Converts AST into binary machine code for Machine W
 
-use asmodeus_parser::ast::*;
+use parseid::ast::*;
 use std::collections::HashMap;
 use thiserror::Error;
 
@@ -544,7 +544,7 @@ impl Default for Assembler {
 }
 
 pub fn assemble_source(source: &str) -> Result<Vec<u16>, Box<dyn std::error::Error>> {
-    let program = asmodeus_parser::parse_source(source)?;
+    let program = parseid::parse_source(source)?;
     let mut assembler = Assembler::new();
     Ok(assembler.assemble(&program)?)
 }

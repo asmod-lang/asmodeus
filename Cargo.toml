@@ -2,7 +2,7 @@
 members = [
     "asmachina",
     "lexariel", 
-    "asmodeus_parser",
+    "parseid",
     "hephasm",
     "dismael"
 ]
@@ -15,7 +15,7 @@ edition = "2021"
 [dependencies]
 asmachina = { path = "asmachina" }
 lexariel = { path = "lexariel" }
-asmodeus_parser = { path = "asmodeus_parser" }
+parseid = { path = "parseid" }
 hephasm = { path = "hephasm" }
 dismael = { path = "dismael" }
 clap = { version = "4.0", features = ["derive"] }

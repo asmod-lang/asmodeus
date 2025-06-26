@@ -6,7 +6,7 @@ use std::process::Command;
 
 use asmachina::{MachineW, MachineError};
 use lexariel::tokenize;
-use asmodeus_parser::parse;
+use parseid::parse;
 use hephasm::assemble_program;
 use dismael::disassemble;
 

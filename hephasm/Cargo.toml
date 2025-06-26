@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 lexariel = { path = "../lexariel" }
-asmodeus_parser = { path = "../asmodeus_parser" }
+parseid = { path = "../parseid" }
 thiserror = "1.0"
 
 [dev-dependencies]

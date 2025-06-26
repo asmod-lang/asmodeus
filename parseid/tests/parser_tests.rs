@@ -1,4 +1,4 @@
-use asmodeus_parser::{parse_source, ast::*, ParserError};
+use parseid::{parse_source, ast::*, ParserError};
 use lexariel::tokenize;
 
 #[test]

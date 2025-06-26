@@ -71,19 +71,11 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "asmachina",
- "asmodeus_parser",
  "clap",
  "dismael",
  "hephasm",
  "lexariel",
- "thiserror",
-]
-
-[[package]]
-name = "asmodeus_parser"
-version = "0.1.0"
-dependencies = [
- "lexariel",
+ "parseid",
  "thiserror",
 ]
 
@@ -151,8 +143,8 @@ checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 name = "hephasm"
 version = "0.1.0"
 dependencies = [
- "asmodeus_parser",
  "lexariel",
+ "parseid",
  "thiserror",
 ]
 
@@ -174,6 +166,14 @@ name = "once_cell_polyfill"
 version = "1.70.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a4895175b425cb1f87721b59f0f286c2092bd4af812243672510e1ac53e2e0ad"
+
+[[package]]
+name = "parseid"
+version = "0.1.0"
+dependencies = [
+ "lexariel",
+ "thiserror",
+]
 
 [[package]]
 name = "proc-macro2"

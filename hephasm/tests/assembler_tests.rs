@@ -1,5 +1,5 @@
 use hephasm::{assemble_source, assemble_program, Assembler, AssemblerError};
-use asmodeus_parser::parse_source;
+use parseid::parse_source;
 
 #[test]
 fn test_simple_instruction() {
