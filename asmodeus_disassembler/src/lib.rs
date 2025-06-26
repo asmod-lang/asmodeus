@@ -185,6 +185,8 @@ impl Disassembler {
             0b01101 => ("PWR".to_string(), None, false),
             0b01110 => ("WEJSCIE".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
             0b01111 => ("WYJSCIE".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
+            0b01110 => ("WPR".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
+            0b01111 => ("WYJ".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
             _ => {
                 // unknown opcode - treat as data
                 if self.data_addresses.contains(&address) {

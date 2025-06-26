@@ -90,6 +90,8 @@ pub struct MachineW {
     pub output_buffer: Vec<u16>,
 
     pub breakpoints: HashSet<u16>,
+
+    pub interactive_mode: bool,
 }
 
 impl Default for MachineW {
@@ -128,7 +130,12 @@ impl MachineW {
             input_buffer: Vec::new(),
             output_buffer: Vec::new(),
             breakpoints: HashSet::new(),
+            interactive_mode: false,
         }
+    }
+
+    pub fn set_interactive_mode(&mut self, enabled: bool) {
+        self.interactive_mode = enabled;
     }
 
     /// Reads a word from memory at the specified address
@@ -419,33 +426,67 @@ impl MachineW {
 
     /// WEJSCIE - Input operation
     fn execute_wejscie(&mut self) -> Result<(), MachineError> {
-        // checking if there is data in input buffer 
-        if let Some(value) = self.input_buffer.pop() {
-            self.ak = value;
+        if self.interactive_mode {
+            // interactive character input mode
+            use std::io::Read;
+            let mut buffer = [0; 1];
+            match io::stdin().read_exact(&mut buffer) {
+                Ok(_) => {
+                    self.ak = buffer[0] as u16; // ASCII value
+                }
+                Err(e) => {
+                    return Err(MachineError::IoError {
+                        message: format!("Failed to read character: {}", e),
+                    });
+                }
+            }
         } else {
-            // simulating input from user (TODO) 
-            print!("Input (enter a number): ");
-            io::stdout().flush().map_err(|e| MachineError::IoError {
-                message: format!("Failed to flush stdout: {}", e),
-            })?;
-            
-            let mut input = String::new();
-            io::stdin().read_line(&mut input).map_err(|e| MachineError::IoError {
-                message: format!("Failed to read from stdin: {}", e),
-            })?;
-            
-            let value = input.trim().parse::<u16>().map_err(|e| MachineError::IoError {
-                message: format!("Invalid number format: {}", e),
-            })?;
-            
-            self.ak = value;
+            // backward compatibility
+            if let Some(value) = self.input_buffer.pop() {
+                self.ak = value;
+            } else {
+                print!("Input (enter a number): ");
+                io::stdout().flush().map_err(|e| MachineError::IoError {
+                    message: format!("Failed to flush stdout: {}", e),
+                })?;
+                
+                let mut input = String::new();
+                io::stdin().read_line(&mut input).map_err(|e| MachineError::IoError {
+                    message: format!("Failed to read from stdin: {}", e),
+                })?;
+                
+                let value = input.trim().parse::<u16>().map_err(|e| MachineError::IoError {
+                    message: format!("Invalid number format: {}", e),
+                })?;
+                
+                self.ak = value;
+            }
         }
         Ok(())
     }
 
     /// WYJSCIE - Output operation
     fn execute_wyjscie(&mut self) -> Result<(), MachineError> {
-        println!("Output: {}", self.ak);
+        if self.interactive_mode {
+            // interactive character output mode
+            let byte_value = (self.ak & 0xFF) as u8; // lower 8 bits
+            if byte_value >= 32 && byte_value <= 126 {
+                // printable ASCII character
+                print!("{}", byte_value as char);
+            } else if byte_value == 10 {
+                // newline
+                println!();
+            } else {
+                // non-printable, show as number
+                print!("[{}]", byte_value);
+            }
+            io::stdout().flush().map_err(|e| MachineError::IoError {
+                message: format!("Failed to flush stdout: {}", e),
+            })?;
+        } else {
+            println!("Output: {}", self.ak);
+        }
+        
         self.output_buffer.push(self.ak);
         Ok(())
     }

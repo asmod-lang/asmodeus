@@ -81,6 +81,7 @@ enum Mode {
     Disassemble,
     Run,
     Debug,
+    Interactive,
     Help,
 }
 
@@ -123,6 +124,10 @@ fn parse_args() -> Result<Args, AsmodeusError> {
         }
         Some("debug") => {
             mode = Mode::Debug;
+            i = 2;
+        }
+        Some("interactive") | Some("live") => {
+            mode = Mode::Interactive;
             i = 2;
         }
         Some("--help") | Some("-h") => {
@@ -192,6 +197,9 @@ fn print_help() {
     println!("  run           Run the assembly program (default)");
     println!("  assemble      Assemble to binary without running");
     println!("  disassemble   Disassemble binary file");
+    println!("  debug         Interactive debugger with breakpoints");
+    println!("  interactive   Real-time character I/O mode");
+    println!("  live          Alias for interactive mode");
     println!();
     println!("OPTIONS:");
     println!("  -o, --output      Specify output file");
@@ -202,6 +210,8 @@ fn print_help() {
     println!("EXAMPLES:");
     println!("  asmod run program.asmod           # Run assembly program");
     println!("  asmod run --debug program.asmod   # Run with debug output");
+    println!("  asmod debug program.asmod         # Interactive debugger");
+    println!("  asmod interactive char_io.asmod   # Real-time character I/O");
     println!("  asmod assemble program.asmod      # Assemble to binary");
     println!("  asmod disassemble program.bin     # Disassemble binary");
     println!("  asmod program.asmod               # Run (default command)");
@@ -219,11 +229,11 @@ fn validate_file_extension(path: &str, mode: Mode) -> Result<(), AsmodeusError> 
     let extension = path.extension().and_then(|ext| ext.to_str());
     
     match (mode.clone(), extension) {
-        (Mode::Run | Mode::Assemble | Mode::Debug, Some("asmod")) => Ok(()),
-        (Mode::Run | Mode::Assemble | Mode::Debug, Some("asm")) => Ok(()),
+        (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive, Some("asmod")) => Ok(()),
+        (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive, Some("asm")) => Ok(()),
         (Mode::Disassemble, Some("bin")) => Ok(()),
-        (Mode::Help, _) => Ok(()), // Help mode doesn't need file validation
-        (Mode::Run | Mode::Assemble | Mode::Debug, Some(ext)) => {
+        (Mode::Help, _) => Ok(()), // help mode doesnt need file validation
+        (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive, Some(ext)) => {
             Err(AsmodeusError::UsageError(
                 format!("Expected .asmod or .asm file, but got .{} file. Please use a valid Asmodeus source file.", ext)
             ))
@@ -758,6 +768,59 @@ fn parse_address(addr_str: &str) -> Result<u16, AsmodeusError> {
     }
 }
 
+fn run_mode_interactive(args: &Args) -> Result<(), AsmodeusError> {
+    let input_path = args.input_file.as_ref()
+        .ok_or_else(|| AsmodeusError::UsageError("No input file specified. Please provide a .asmod file for interactive mode.".to_string()))?;
+    
+    validate_file_extension(input_path, Mode::Interactive)?;
+    
+    if args.verbose {
+        println!("🚀 Starting Asmodeus Interactive Mode: {}", input_path);
+        println!("Real-time character I/O enabled");
+        println!();
+    }
+    
+    let machine_code = assemble_file(input_path, args)?;
+    run_interactive_program(&machine_code, args)?;
+    
+    Ok(())
+}
+
+fn run_interactive_program(machine_code: &[u16], args: &Args) -> Result<(), AsmodeusError> {
+    println!("🔤 Asmodeus Interactive Mode");
+    println!("Character-based I/O enabled - type characters for real-time processing");
+    println!("Press Ctrl+C to interrupt\n");
+    
+    let mut machine = MachineW::new();
+    machine.set_interactive_mode(true);
+    machine.load_program(machine_code)?;
+    
+    if args.verbose {
+        println!("Program loaded: {} words", machine_code.len());
+        println!("Interactive character I/O mode: ON");
+        println!("Program starting...\n");
+    }
+    
+    match machine.run() {
+        Ok(_) => {
+            println!("\n✅ Program completed successfully.");
+            if args.verbose {
+                println!("Final machine state:");
+                println!("AK: {:04X} ({})", machine.ak, machine.ak);
+                if !machine.get_output_buffer().is_empty() {
+                    println!("Output buffer: {:?}", machine.get_output_buffer());
+                }
+            }
+        }
+        Err(e) => {
+            eprintln!("\n❌ Execution error: {}", e);
+            return Err(AsmodeusError::MachineError(e));
+        }
+    }
+    
+    Ok(())
+}
+
 fn main() {
     let args = match parse_args() {
         Ok(args) => args,
@@ -776,6 +839,7 @@ fn main() {
         Mode::Assemble => run_mode_assemble(&args),
         Mode::Run => run_mode_run(&args),
         Mode::Debug => run_mode_debug(&args),
+        Mode::Interactive => run_mode_interactive(&args),
         Mode::Disassemble => run_mode_disassemble(&args),
     };
 

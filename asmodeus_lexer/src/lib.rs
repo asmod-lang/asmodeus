@@ -270,9 +270,9 @@ impl Lexer {
     }
 
     fn is_keyword(word: &str) -> bool {
-        matches!(word.to_uppercase().as_str(),
-            "DOD" | "ODE" | "ŁAD" | "LAD" | "POB" | "SOB" | "SOM" | "SOZ" | "STP" | 
-            "DNS" | "PZS" | "SDP" | "CZM" | "MSK" | "PWR" | "WEJSCIE" | "WYJSCIE"
+    matches!(word.to_uppercase().as_str(),
+        "DOD" | "ODE" | "ŁAD" | "LAD" | "POB" | "SOB" | "SOM" | "SOZ" | "STP" | 
+        "DNS" | "PZS" | "SDP" | "CZM" | "MSK" | "PWR" | "WPR" | "WEJSCIE" | "WYJSCIE" | "WYJ"
         )
     }
 

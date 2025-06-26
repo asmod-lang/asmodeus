@@ -319,8 +319,8 @@ impl Assembler {
             "CZM" => Ok(0b01011),
             "MSK" => Ok(0b01100),
             "PWR" => Ok(0b01101),
-            "WEJSCIE" => Ok(0b01110),
-            "WYJSCIE" => Ok(0b01111),
+            "WPR" | "WEJSCIE" => Ok(0b01110),
+            "WYJ" | "WYJSCIE" => Ok(0b01111),
             _ => Err(AssemblerError::InvalidOpcode {
                 opcode: instruction.to_string(),
                 line,

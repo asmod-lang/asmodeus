@@ -186,7 +186,7 @@ impl Parser {
 
     fn has_operand(&self, opcode: &str) -> bool {
         match opcode.to_uppercase().as_str() {
-            "STP" | "DNS" | "PZS" | "SDP" | "CZM" | "PWR" | "WEJSCIE" | "WYJSCIE" => false,
+            "STP" | "DNS" | "PZS" | "SDP" | "CZM" | "PWR" | "WPR" | "WYJ" | "WEJSCIE" | "WYJSCIE" => false,
             _ => true,
         }
     }
