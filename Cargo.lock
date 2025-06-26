@@ -59,12 +59,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487"
 
 [[package]]
+name = "asmachina"
+version = "0.1.0"
+dependencies = [
+ "thiserror",
+]
+
+[[package]]
 name = "asmodeus"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "asmachina",
  "asmodeus_assembler",
- "asmodeus_core",
  "asmodeus_disassembler",
  "asmodeus_lexer",
  "asmodeus_parser",
@@ -78,13 +85,6 @@ version = "0.1.0"
 dependencies = [
  "asmodeus_lexer",
  "asmodeus_parser",
- "thiserror",
-]
-
-[[package]]
-name = "asmodeus_core"
-version = "0.1.0"
-dependencies = [
  "thiserror",
 ]
 

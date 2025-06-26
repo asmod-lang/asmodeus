@@ -1,6 +1,6 @@
 [workspace]
 members = [
-    "asmodeus_core",
+    "asmachina",
     "asmodeus_lexer", 
     "asmodeus_parser",
     "asmodeus_assembler",
@@ -13,7 +13,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-asmodeus_core = { path = "asmodeus_core" }
+asmachina = { path = "asmachina" }
 asmodeus_lexer = { path = "asmodeus_lexer" }
 asmodeus_parser = { path = "asmodeus_parser" }
 asmodeus_assembler = { path = "asmodeus_assembler" }

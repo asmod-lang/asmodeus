@@ -4,7 +4,7 @@ use std::fs;
 use std::path::Path;
 use std::process::Command;
 
-use asmodeus_core::{MachineW, MachineError};
+use asmachina::{MachineW, MachineError};
 use asmodeus_lexer::tokenize;
 use asmodeus_parser::parse;
 use asmodeus_assembler::assemble_program;

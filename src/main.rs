@@ -5,7 +5,7 @@ use std::fs;
 use std::path::Path;
 use std::process;
 
-use asmodeus_core::{MachineW, MachineError};
+use asmachina::{MachineW, MachineError};
 use std::io::{self, Write};
 use asmodeus_lexer::{tokenize, Token};
 use asmodeus_parser::{parse, ast::{Program, ProgramElement}};
@@ -18,7 +18,7 @@ enum AsmodeusError {
     LexerError(asmodeus_lexer::LexerError),
     ParserError(asmodeus_parser::ParserError),
     AssemblerError(asmodeus_assembler::AssemblerError),
-    MachineError(asmodeus_core::MachineError),
+    MachineError(asmachina::MachineError),
     DisassemblerError(asmodeus_disassembler::DisassemblerError),
     UsageError(String),
 }
@@ -63,8 +63,8 @@ impl From<asmodeus_assembler::AssemblerError> for AsmodeusError {
     }
 }
 
-impl From<asmodeus_core::MachineError> for AsmodeusError {
-    fn from(error: asmodeus_core::MachineError) -> Self {
+impl From<asmachina::MachineError> for AsmodeusError {
+    fn from(error: asmachina::MachineError) -> Self {
         AsmodeusError::MachineError(error)
     }
 }

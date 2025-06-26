@@ -1,4 +1,4 @@
-use asmodeus_core::{MachineW, MachineError};
+use asmachina::{MachineW, MachineError};
 
 #[test]
 fn test_machine_initialization() {
