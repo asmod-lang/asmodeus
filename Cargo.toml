@@ -1,7 +1,7 @@
 [workspace]
 members = [
     "asmachina",
-    "asmodeus_lexer", 
+    "lexariel", 
     "asmodeus_parser",
     "hephasm",
     "dismael"
@@ -14,7 +14,7 @@ edition = "2021"
 
 [dependencies]
 asmachina = { path = "asmachina" }
-asmodeus_lexer = { path = "asmodeus_lexer" }
+lexariel = { path = "lexariel" }
 asmodeus_parser = { path = "asmodeus_parser" }
 hephasm = { path = "hephasm" }
 dismael = { path = "dismael" }

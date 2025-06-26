@@ -1,5 +1,5 @@
 use asmodeus_parser::{parse_source, ast::*, ParserError};
-use asmodeus_lexer::tokenize;
+use lexariel::tokenize;
 
 #[test]
 fn test_empty_program() {

@@ -71,18 +71,11 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "asmachina",
- "asmodeus_lexer",
  "asmodeus_parser",
  "clap",
  "dismael",
  "hephasm",
- "thiserror",
-]
-
-[[package]]
-name = "asmodeus_lexer"
-version = "0.1.0"
-dependencies = [
+ "lexariel",
  "thiserror",
 ]
 
@@ -90,7 +83,7 @@ dependencies = [
 name = "asmodeus_parser"
 version = "0.1.0"
 dependencies = [
- "asmodeus_lexer",
+ "lexariel",
  "thiserror",
 ]
 
@@ -158,8 +151,8 @@ checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 name = "hephasm"
 version = "0.1.0"
 dependencies = [
- "asmodeus_lexer",
  "asmodeus_parser",
+ "lexariel",
  "thiserror",
 ]
 
@@ -168,6 +161,13 @@ name = "is_terminal_polyfill"
 version = "1.70.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7943c866cc5cd64cbc25b2e01621d07fa8eb2a1a23160ee81ce38704e97b8ecf"
+
+[[package]]
+name = "lexariel"
+version = "0.1.0"
+dependencies = [
+ "thiserror",
+]
 
 [[package]]
 name = "once_cell_polyfill"

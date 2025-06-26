@@ -5,10 +5,10 @@ use std::path::Path;
 use std::process::Command;
 
 use asmachina::{MachineW, MachineError};
-use asmodeus_lexer::tokenize;
+use lexariel::tokenize;
 use asmodeus_parser::parse;
 use hephasm::assemble_program;
-use asmodeus_disassembler::disassemble;
+use dismael::disassemble;
 
 #[test]
 fn test_complete_pipeline_simple() {

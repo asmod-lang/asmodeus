@@ -7,7 +7,7 @@ use std::process;
 
 use asmachina::{MachineW, MachineError};
 use std::io::{self, Write};
-use asmodeus_lexer::{tokenize, Token};
+use lexariel::{tokenize, Token};
 use asmodeus_parser::{parse, ast::{Program, ProgramElement}};
 use hephasm::assemble_program;
 use dismael::disassemble;
@@ -15,7 +15,7 @@ use dismael::disassemble;
 #[derive(Debug)]
 enum AsmodeusError {
     IoError(std::io::Error),
-    LexerError(asmodeus_lexer::LexerError),
+    LexerError(lexariel::LexerError),
     ParserError(asmodeus_parser::ParserError),
     AssemblerError(hephasm::AssemblerError),
     MachineError(asmachina::MachineError),
@@ -45,8 +45,8 @@ impl From<std::io::Error> for AsmodeusError {
     }
 }
 
-impl From<asmodeus_lexer::LexerError> for AsmodeusError {
-    fn from(error: asmodeus_lexer::LexerError) -> Self {
+impl From<lexariel::LexerError> for AsmodeusError {
+    fn from(error: lexariel::LexerError) -> Self {
         AsmodeusError::LexerError(error)
     }
 }

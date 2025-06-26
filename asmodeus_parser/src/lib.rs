@@ -3,7 +3,7 @@
 
 pub mod ast;
 
-use asmodeus_lexer::{Token, TokenKind, LexerError};
+use lexariel::{Token, TokenKind, LexerError};
 use ast::*;
 use thiserror::Error;
 
@@ -518,6 +518,6 @@ pub fn parse(tokens: Vec<Token>) -> Result<Program, ParserError> {
 
 /// convenience function to parse source code directly
 pub fn parse_source(source: &str) -> Result<Program, ParserError> {
-    let tokens = asmodeus_lexer::tokenize(source)?;
+    let tokens = lexariel::tokenize(source)?;
     parse(tokens)
 }

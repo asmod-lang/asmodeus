@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-asmodeus_lexer = { path = "../asmodeus_lexer" }
+lexariel = { path = "../lexariel" }
 thiserror = "1.0"
 
 [dev-dependencies]

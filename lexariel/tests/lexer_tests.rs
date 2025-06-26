@@ -1,4 +1,4 @@
-use asmodeus_lexer::{tokenize, Lexer, Token, TokenKind, LexerError};
+use lexariel::{tokenize, Lexer, Token, TokenKind, LexerError};
 
 #[test]
 fn test_empty_input() {
