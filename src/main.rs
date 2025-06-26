@@ -6,8 +6,8 @@ use std::path::Path;
 use std::process;
 
 use asmodeus_core::MachineW;
-use asmodeus_lexer::tokenize;
-use asmodeus_parser::parse;
+use asmodeus_lexer::{tokenize, Token};
+use asmodeus_parser::{parse, ast::{Program, ProgramElement}};
 use asmodeus_assembler::assemble_program;
 use asmodeus_disassembler::disassemble;
 
@@ -247,6 +247,83 @@ fn read_binary(path: &str) -> Result<Vec<u16>, AsmodeusError> {
     Ok(words)
 }
 
+fn print_tokens_debug(tokens: &[Token]) {
+    println!("=== TOKENS ===");
+    for (i, token) in tokens.iter().enumerate() {
+        println!("Token {} {{", i + 1);
+        println!("    kind: {:?},", token.kind);
+        println!("    value: \"{}\",", token.value);
+        println!("    line: {},", token.line);
+        println!("    column: {}", token.column);
+        println!("}},");
+    }
+    println!("======\n");
+}
+
+fn print_ast_debug(ast: &Program) {
+    println!("=== AST ===");
+    println!("Program {{");
+    println!("    elements: [");
+    for (i, element) in ast.elements.iter().enumerate() {
+        print!("        ");
+        match element {
+            ProgramElement::LabelDefinition(label) => {
+                println!("LabelDefinition(");
+                println!("            LabelDefinition {{");
+                println!("                name: \"{}\",", label.name);
+                println!("                line: {},", label.line);
+                println!("                column: {}", label.column);
+                println!("            }}");
+                print!("        )");
+            },
+            ProgramElement::Instruction(instr) => {
+                println!("Instruction(");
+                println!("            Instruction {{");
+                println!("                opcode: \"{}\",", instr.opcode);
+                match &instr.operand {
+                    Some(operand) => {
+                        println!("                operand: Some(Operand {{");
+                        println!("                    addressing_mode: {:?},", operand.addressing_mode);
+                        println!("                    value: \"{}\"", operand.value);
+                        println!("                }}),");
+                    },
+                    None => println!("                operand: None,"),
+                }
+                println!("                line: {},", instr.line);
+                println!("                column: {}", instr.column);
+                println!("            }}");
+                print!("        )");
+            },
+            ProgramElement::Directive(directive) => {
+                println!("Directive(");
+                println!("            Directive {{");
+                println!("                name: \"{}\",", directive.name);
+                println!("                arguments: {:?},", directive.arguments);
+                println!("                line: {},", directive.line);
+                println!("                column: {}", directive.column);
+                println!("            }}");
+                print!("        )");
+            }
+            ProgramElement::MacroDefinition(_) => {
+                println!("MacroDefinition(...)");
+                print!("        ");
+            }
+            ProgramElement::MacroCall(_) => {
+                println!("MacroCall(...)");
+                print!("        ");
+            }
+        }
+        if i < ast.elements.len() - 1 {
+            println!(",");
+        } else {
+            println!();
+        }
+    }
+    println!("    ]");
+    println!("}}");
+    println!("======\n");
+}
+
 fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, AsmodeusError> {
     if args.verbose {
         println!("Reading source file: {}", input_path);
@@ -261,7 +338,7 @@ fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, AsmodeusErro
     let tokens = tokenize(&source)?;
     
     if args.debug {
-        println!("Tokens: {:?}", tokens);
+        print_tokens_debug(&tokens);
     }
     
     if args.verbose {
@@ -271,7 +348,7 @@ fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, AsmodeusErro
     let ast = parse(tokens)?;
     
     if args.debug {
-        println!("AST: {:?}", ast);
+        print_ast_debug(&ast);
     }
     
     if args.verbose {
