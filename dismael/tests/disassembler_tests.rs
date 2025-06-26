@@ -1,4 +1,4 @@
-use asmodeus_disassembler::{disassemble, disassemble_to_string, Disassembler, AdvancedDisassembler, DisassemblerError};
+use dismael::{disassemble, disassemble_to_string, Disassembler, AdvancedDisassembler, DisassemblerError};
 use hephasm::assemble_source;
 
 #[test]

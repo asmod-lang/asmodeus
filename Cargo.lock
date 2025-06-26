@@ -71,18 +71,10 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "asmachina",
- "asmodeus_disassembler",
  "asmodeus_lexer",
  "asmodeus_parser",
  "clap",
- "hephasm",
- "thiserror",
-]
-
-[[package]]
-name = "asmodeus_disassembler"
-version = "0.1.0"
-dependencies = [
+ "dismael",
  "hephasm",
  "thiserror",
 ]
@@ -147,6 +139,14 @@ name = "colorchoice"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b05b61dc5112cbb17e4b6cd61790d9845d13888356391624cbe7e41efeac1e75"
+
+[[package]]
+name = "dismael"
+version = "0.1.0"
+dependencies = [
+ "hephasm",
+ "thiserror",
+]
 
 [[package]]
 name = "heck"
