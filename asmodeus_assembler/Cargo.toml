@@ -1,0 +1,11 @@
+[package]
+name = "asmodeus_assembler"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+asmodeus_lexer = { path = "../asmodeus_lexer" }
+asmodeus_parser = { path = "../asmodeus_parser" }
+thiserror = "1.0"
+
+[dev-dependencies]
