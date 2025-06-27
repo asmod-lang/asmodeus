@@ -1,6 +1,6 @@
 //! integration tests for asmachina module
 
-use asmachina::{MachineW, MachineError};
+use asmachina::{MachineW};
 
 #[test]
 fn test_complex_program_with_stack_and_io() {

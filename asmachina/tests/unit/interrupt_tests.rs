@@ -1,4 +1,4 @@
-use asmachina::{MachineW, MachineError};
+use asmachina::{MachineW};
 
 #[test]
 fn test_interrupt_disable_enable() {

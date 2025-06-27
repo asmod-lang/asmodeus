@@ -1,4 +1,4 @@
-use asmachina::{MachineW, MachineError};
+use asmachina::{MachineW};
 
 #[test]
 fn test_arithmetic_overflow() {

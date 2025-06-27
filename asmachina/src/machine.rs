@@ -1,7 +1,6 @@
 //! core emulator implementation
 
 use crate::error::MachineError;
-use crate::types::MachineWState;
 use std::collections::HashSet;
 
 /// - operating memory (PaO): 2048 words, 16-bit each
