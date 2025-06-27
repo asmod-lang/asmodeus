@@ -7,17 +7,17 @@ use std::collections::HashSet;
 pub struct AdvancedDisassembler {
     base: Disassembler,
     /// function entry points
-    functions: HashSet<u16>,
+    _functions: HashSet<u16>,
     /// code vs data separation
-    code_regions: Vec<(u16, u16)>,
+    _code_regions: Vec<(u16, u16)>,
 }
 
 impl AdvancedDisassembler {
     pub fn new() -> Self {
         Self {
             base: Disassembler::new(),
-            functions: HashSet::new(),
-            code_regions: Vec::new(),
+            _functions: HashSet::new(),
+            _code_regions: Vec::new(),
         }
     }
 
