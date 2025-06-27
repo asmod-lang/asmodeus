@@ -58,7 +58,7 @@ impl InstructionDecoder {
         })
     }
 
-    pub fn detect_addressing_mode(&self, opcode: u8, _argument: u16) -> AddressingMode {
+    pub fn _detect_addressing_mode(&self, opcode: u8, _argument: u16) -> AddressingMode {
         match opcode {
             0b00101 | 0b00110 | 0b10000 => AddressingMode::Direct, // jump instructions
             0b01100 => AddressingMode::Direct, // MSK
