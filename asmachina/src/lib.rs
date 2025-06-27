@@ -1,6 +1,5 @@
 //! Core emulator for Machine W architecture
 //! 
-//! This crate implements a complete Von Neumann machine emulator with:
 //! - 16-bit word size architecture
 //! - 2048 words of memory
 //! - Full instruction set with arithmetic, logic, control flow, and I/O operations
