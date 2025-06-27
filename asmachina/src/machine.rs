@@ -124,7 +124,7 @@ impl MachineW {
     }
 
     /// resolves an operand address based on addressing mode
-    fn resolve_operand(&self, _instruction_code: u16) -> Result<u16, MachineError> {
+    fn _resolve_operand(&self, _instruction_code: u16) -> Result<u16, MachineError> {
         // TODO: this would analyze the instruction format
         // to determine the addressing mode and calculate the effective address
         Ok(self.ad)
@@ -157,7 +157,7 @@ impl MachineW {
         self.execute_instruction() // based on the decoded opcode
     }
 
-    fn handle_interrupts(&mut self) -> Result<(), MachineError> {
+    fn _handle_interrupts(&mut self) -> Result<(), MachineError> {
         if self.interrupts_enabled && self.pending_interrupt.is_some() {
             let interrupt_vector = self.pending_interrupt.take().unwrap();
             
