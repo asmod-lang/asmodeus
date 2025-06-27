@@ -1,4 +1,4 @@
-use parseid::{parse_source, ast::*};
+use parseid::{parse_source};
 
 #[test]
 fn test_empty_program() {

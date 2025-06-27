@@ -20,7 +20,7 @@ impl TokenNavigator {
     }
 
     /// returns the token at the given offset without advancing
-    pub fn peek_ahead(&self, offset: usize) -> Option<&Token> {
+    pub fn _peek_ahead(&self, offset: usize) -> Option<&Token> {
         self.tokens.get(self.position + offset)
     }
 

@@ -1,7 +1,7 @@
 //! Macro parsing
 
 use lexariel::TokenKind;
-use crate::ast::{MacroDefinition, MacroCall, ProgramElement};
+use crate::ast::{MacroDefinition, MacroCall};
 use crate::error::ParserError;
 use crate::token_navigator::TokenNavigator;
 use crate::parser::Parser;
