@@ -10,7 +10,6 @@ mod assembler;
 mod debugger;
 mod modes;
 
-use error::AsmodeusError;
 use cli::{parse_args, print_help, Mode};
 use modes::{run_mode_assemble, run_mode_run, run_mode_disassemble, run_mode_debug, run_mode_interactive};
 
