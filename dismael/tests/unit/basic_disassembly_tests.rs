@@ -49,7 +49,7 @@ fn test_all_opcodes() {
 
     let result = disassemble(&instructions).unwrap();
     
-    for (i, expected) in expected_mnemonics.iter().enumerate() {
+    for (_, expected) in expected_mnemonics.iter().enumerate() {
         let instruction_line = result.iter()
             .find(|line| line.contains(expected))
             .expect(&format!("Could not find instruction {}", expected));
