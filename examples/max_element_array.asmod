@@ -1,0 +1,51 @@
+; Program for finding max (number) in array (MAX(COUNT, TAB))
+
+; Initialization - getting the array size and setting up the maximum
+POB TAB
+ŁAD MAX
+POB N
+ŁAD L
+
+; Main loop for searching the array
+LOOP: 
+    POB L
+    ODE ST1
+    ŁAD L
+    SOM END        ; jump to the END if L < 0 (end of the array)
+    
+S1: 
+    POB TAB
+    ODE MAX
+    ; If T[N-L-1] - MAX >= 0, that means T[N-L-1] >= MAX
+    SOM CONT       ; jump if result of substraction is negative (element <= MAX)
+    
+    ; element is greater than MAX - set up new MAX
+    DOD MAX
+    ŁAD MAX 
+    
+CONT: 
+    POB S1
+    DOD ST1
+    ŁAD S1
+    SOB LOOP       ; unconditional jump to the start of the loop
+
+; End of the program
+END: 
+    POB ORS
+    ŁAD S1
+    POB MAX
+    WYJSCIE        ; Output to the console (buffer)
+    STP
+
+; Variables
+L: RPA           ; Loop counter
+MAX: RPA         ; Maximum value found
+ORS: POB TAB     ; Starting array address
+ST1: RST 1       ; Const 1
+
+N: RST 5         ; Array size
+TAB: RST 6       ; First array element
+     RST 2
+     RST 8
+     RST 7
+     RST 15      ; Fifth (last) array element
