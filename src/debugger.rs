@@ -5,7 +5,7 @@ use crate::debug_utils::print_machine_state;
 
 pub fn interactive_debugger_loop(machine: &mut MachineW) -> Result<(), AsmodeusError> {
     loop {
-        print!("(asmod-debug)> ");
+        print!("(bugseer)> ");
         io::stdout().flush().unwrap();
         
         let mut input = String::new();

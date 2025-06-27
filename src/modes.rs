@@ -69,7 +69,7 @@ pub fn run_mode_debug(args: &Args) -> Result<(), AsmodeusError> {
     validate_file_extension(input_path, Mode::Debug)?;
     
     if args.verbose {
-        println!("🐛 Starting interactive debugger for: {}", input_path);
+        println!("🐛 Starting Bugseer for: {}", input_path);
         println!();
     }
 
@@ -81,7 +81,7 @@ pub fn run_mode_debug(args: &Args) -> Result<(), AsmodeusError> {
     })?;
     machine.is_running = true;
 
-    println!("🐛 Asmodeus Interactive Debugger");
+    println!("🐛 Bugseer - Asmodeus Interactive Debugger");
     println!("Program loaded: {} ({} words)", input_path, machine_code.len());
     println!("Type 'h' for help\n");
 
