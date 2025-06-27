@@ -35,7 +35,7 @@ pub fn parse_args() -> Result<Args, AsmodeusError> {
     let mut verbose = false;
     let mut debug = false;
     
-    let mut i = 1;
+    let mut i;
     
     match args.get(1).map(|s| s.as_str()) {
         Some("run") => {
