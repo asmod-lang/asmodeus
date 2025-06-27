@@ -22,14 +22,14 @@ fn test_label_with_instruction() {
     
     assert_eq!(program.elements.len(), 3);
     
-    // First element should be label
+    // first element should be label
     if let ProgramElement::LabelDefinition(label) = &program.elements[0] {
         assert_eq!(label.name, "loop");
     } else {
         panic!("Expected label definition");
     }
     
-    // Second element should be instruction
+    // second element should be instruction
     if let ProgramElement::Instruction(inst) = &program.elements[1] {
         assert_eq!(inst.opcode, "DOD");
     } else {

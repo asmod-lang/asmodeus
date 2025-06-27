@@ -1,5 +1,3 @@
-// Główny plik testów jednostkowych dla parseid
-
 mod unit {
     pub mod basic_parsing_tests;
     pub mod instruction_tests;
