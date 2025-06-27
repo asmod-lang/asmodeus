@@ -1,15 +1,7 @@
-use std::path::PathBuf;
 use lexariel::tokenize;
 use parseid::parse;
 use hephasm::assemble_program;
 use asmachina::MachineW;
-
-fn get_example_path(filename: &str) -> PathBuf {
-    let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("examples");
-    path.push(filename);
-    path
-}
 
 #[test]
 fn test_example_hello() {
