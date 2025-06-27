@@ -1,4 +1,4 @@
-//! Macro parsing functionality
+//! Macro parsing
 
 use lexariel::TokenKind;
 use crate::ast::{MacroDefinition, MacroCall, ProgramElement};
@@ -6,7 +6,6 @@ use crate::error::ParserError;
 use crate::token_navigator::TokenNavigator;
 use crate::parser::Parser;
 
-/// Parses macro definitions and calls
 pub(crate) struct MacroParser;
 
 impl MacroParser {

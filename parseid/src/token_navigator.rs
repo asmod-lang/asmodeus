@@ -3,7 +3,7 @@
 use lexariel::{Token, TokenKind};
 use crate::error::ParserError;
 
-/// Helper struct for navigating through tokens
+/// helper struct for navigating through tokens
 pub(crate) struct TokenNavigator {
     tokens: Vec<Token>,
     position: usize,

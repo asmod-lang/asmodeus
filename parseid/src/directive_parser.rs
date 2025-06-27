@@ -1,4 +1,4 @@
-//! Directive parsing functionality
+//! directive parser
 
 use lexariel::TokenKind;
 use crate::ast::Directive;

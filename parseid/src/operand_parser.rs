@@ -1,11 +1,10 @@
-//! Operand parsing functionality
+//! Operand parsing
 
 use lexariel::TokenKind;
 use crate::ast::{Operand, AddressingMode};
 use crate::error::ParserError;
 use crate::token_navigator::TokenNavigator;
 
-/// Parses operands with different addressing modes
 pub(crate) struct OperandParser;
 
 impl OperandParser {

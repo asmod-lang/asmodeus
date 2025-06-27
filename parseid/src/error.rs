@@ -1,4 +1,4 @@
-//! Error types for the parser
+//! error types for parser
 
 use lexariel::LexerError;
 use thiserror::Error;

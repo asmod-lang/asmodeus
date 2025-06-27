@@ -1,4 +1,4 @@
-//! Instruction parsing functionality
+//! instruction parsing
 
 use lexariel::TokenKind;
 use crate::ast::{Instruction, LabelDefinition};
@@ -6,7 +6,6 @@ use crate::error::ParserError;
 use crate::token_navigator::TokenNavigator;
 use crate::operand_parser::OperandParser;
 
-/// Parses instructions and labels
 pub(crate) struct InstructionParser;
 
 impl InstructionParser {
