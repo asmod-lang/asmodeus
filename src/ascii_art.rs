@@ -1,4 +1,4 @@
-pub fn print_asmodeus_logo_compact() {
+pub fn _print_asmodeus_logo_compact() {
     println!();
     println!("\x1b[1m\x1b[38;5;255m ______                                  __      \x1b[0m");
     println!("\x1b[1m\x1b[38;5;252m/\\  _  \\                                /\\ \\     \x1b[0m");
@@ -50,10 +50,4 @@ pub fn print_info(message: &str) {
 
 pub fn print_command(command: &str, description: &str) {
     println!("  \x1b[1m\x1b[38;5;255m{}\x1b[0m  \x1b[38;5;244m{}\x1b[0m", command, description);
-}
-
-pub fn supports_color() -> bool {
-    std::env::var("TERM").map_or(false, |term| {
-        !term.is_empty() && term != "dumb"
-    }) && std::env::var("NO_COLOR").is_err()
 }
