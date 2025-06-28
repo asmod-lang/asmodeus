@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-# Development wrapper - asmod through cargo for development
+# development wrapper - asmod through cargo for development
 
-echo "🔧 Development mode - running through cargo..."
+BOLD='\033[1m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+echo -e "${BOLD}${BLUE}🔧 Development mode - running through cargo...${NC}"
 cargo run -- "$@"
