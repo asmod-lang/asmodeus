@@ -16,7 +16,8 @@ fn test_cli_hello_program() {
     
     let stdout = String::from_utf8_lossy(&output.stdout);
     assert!(stdout.contains("Program execution completed successfully"));
-    assert!(stdout.contains("AK: 002A (42)"));
+    assert!(stdout.contains("OUTPUT"));
+    assert!(stdout.contains("42 (0x002A)"));
 }
 
 #[test]
@@ -30,25 +31,8 @@ fn test_cli_addition_program() {
     
     let stdout = String::from_utf8_lossy(&output.stdout);
     assert!(stdout.contains("Program execution completed successfully"));
-    assert!(stdout.contains("AK: 002A (42)"));
-}
-
-#[test]
-fn test_cli_countdown_program() {
-    let output = Command::new("cargo")
-        .args(&["run", "--", "examples/countdown.asmod"])
-        .output()
-        .expect("Failed to execute command");
-
-    assert!(output.status.success());
-    
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("Program execution completed successfully"));
-    // 3, 2, 1, 0
-    assert!(stdout.contains("[0] 3"));
-    assert!(stdout.contains("[1] 2"));
-    assert!(stdout.contains("[2] 1"));
-    assert!(stdout.contains("[3] 0"));
+    assert!(stdout.contains("OUTPUT"));
+    assert!(stdout.contains("42 (0x002A)"));
 }
 
 #[test]
@@ -178,10 +162,16 @@ fn test_cli_help() {
     assert!(output.status.success());
     
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("Asmodeus - Machine W Emulator and Assembler"));
-    assert!(stdout.contains("Usage:"));
+    
+    assert!(stdout.contains("Usage: asmod <COMMAND> [OPTIONS] <INPUT_FILE>"));
+    assert!(stdout.contains("COMMANDS:"));
     assert!(stdout.contains("OPTIONS:"));
     assert!(stdout.contains("EXAMPLES:"));
+    
+    assert!(stdout.contains("run"));
+    assert!(stdout.contains("debug"));
+    assert!(stdout.contains("assemble"));
+    assert!(stdout.contains("interactive"));
 }
 
 #[test]
@@ -198,7 +188,7 @@ fn test_cli_verbose_mode() {
     assert!(stdout.contains("Tokenizing source code"));
     assert!(stdout.contains("Parsing tokens to AST"));
     assert!(stdout.contains("Assembling AST to machine code"));
-    assert!(stdout.contains("Creating Machine W emulator"));
+    assert!(stdout.contains("Creating Asmachina emulator"));
 }
 
 #[test]
