@@ -11,6 +11,7 @@ use crate::error::AsmodeusError;
 use crate::cli::Args;
 use crate::file_utils::read_file;
 use crate::debug_utils::{print_tokens_debug, print_ast_debug, print_machine_state};
+use crate::ascii_art::{print_success, print_info};
 
 pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, AsmodeusError> {
     if args.verbose {
@@ -54,19 +55,19 @@ pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, Asmodeus
 
 pub fn run_program(machine_code: &[u16], args: &Args) -> Result<(), AsmodeusError> {
     if args.verbose {
-        println!("Creating Machine W emulator...");
+        print_info("Creating Machine W emulator...");
     }
     
     let mut machine = MachineW::new();
     
     if args.verbose {
-        println!("Loading program into memory...");
+        print_info("Loading program into memory...");
     }
     
     machine.load_program(machine_code)?;
     
     if args.verbose {
-        println!("Starting execution...");
+        print_info("Starting execution...");
         println!("Initial machine state:");
         print_machine_state(&machine);
         println!();
@@ -76,7 +77,7 @@ pub fn run_program(machine_code: &[u16], args: &Args) -> Result<(), AsmodeusErro
         AsmodeusError::UsageError("Program execution failed".to_string())
     })?;
     
-    println!("Program execution completed successfully.");
+    print_success("Program execution completed successfully.");
     println!();
     println!("Final machine state:");
     print_machine_state(&machine);
