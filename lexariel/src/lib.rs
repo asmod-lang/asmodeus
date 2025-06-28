@@ -7,6 +7,7 @@ mod keywords;
 mod position;
 mod parsers;
 mod lexer;
+mod ascii_art;
 
 pub use error::LexerError;
 pub use token::{Token, TokenKind};
@@ -20,6 +21,7 @@ pub fn tokenize(input: &str) -> Result<Vec<Token>, LexerError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::ascii_art::print_lexariel_logo;
 
     #[test]
     fn test_empty_input() {
@@ -42,5 +44,11 @@ mod tests {
         assert_eq!(tokens[0].kind, TokenKind::Keyword);
         assert_eq!(tokens[0].value, "DOD");
         assert_eq!(tokens[1].kind, TokenKind::Eof);
+    }
+
+    #[test]
+    fn test_lexariel_logo() {
+        print_lexariel_logo();
+        assert!(true);
     }
 }
