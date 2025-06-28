@@ -9,6 +9,7 @@ mod instruction_parser;
 mod directive_parser;
 mod macro_parser;
 mod parser;
+mod ascii_art;
 
 pub use error::ParserError;
 pub use parser::Parser;
@@ -24,4 +25,16 @@ pub fn parse(tokens: Vec<Token>) -> Result<Program, ParserError> {
 pub fn parse_source(source: &str) -> Result<Program, ParserError> {
     let tokens = lexariel::tokenize(source)?;
     parse(tokens)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::ascii_art::print_parseid_logo;
+
+    #[test]
+    fn test_parseid_logo() {
+        print_parseid_logo();
+        assert!(true);
+    }
 }
