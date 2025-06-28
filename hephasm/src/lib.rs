@@ -9,6 +9,7 @@ mod instruction;
 mod operand;
 mod directive;
 mod core;
+mod ascii_art;
 
 pub use error::AssemblerError;
 pub use types::{Symbol, SymbolType, ExpandedMacro};
@@ -26,4 +27,16 @@ pub fn assemble_source(source: &str) -> Result<Vec<u16>, Box<dyn std::error::Err
 pub fn assemble_program(program: &Program) -> Result<Vec<u16>, AssemblerError> {
     let mut assembler = Assembler::new();
     assembler.assemble(program)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::ascii_art::print_hephasm_logo;
+
+    #[test]
+    fn test_hephasm_logo() {
+        print_hephasm_logo();
+        assert!(true);
+    }
 }
