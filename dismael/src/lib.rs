@@ -8,6 +8,7 @@ mod analyzer;
 mod formatter;
 mod core;
 mod advanced_disassembler;
+mod ascii_art;
 
 pub use error::DisassemblerError;
 pub use types::{DisassembledInstruction, AddressingMode};
@@ -22,4 +23,15 @@ pub fn disassemble(machine_code: &[u16]) -> Result<Vec<String>, DisassemblerErro
 pub fn disassemble_to_string(machine_code: &[u16]) -> Result<String, DisassemblerError> {
     let lines = disassemble(machine_code)?;
     Ok(lines.join("\n"))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_dismael_logo() {
+        crate::ascii_art::print_dismael_logo();
+        assert!(true);
+    }
 }
