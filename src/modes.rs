@@ -4,8 +4,8 @@ use crate::cli::{Args, Mode};
 use crate::file_utils::{validate_file_extension, write_binary};
 use crate::assembler::{assemble_file, run_program, disassemble_file, run_interactive_program};
 use crate::debugger::interactive_debugger_loop;
-use crate::debug_utils::print_machine_state;
-use crate::ascii_art::{print_success, print_info, print_bugseer_logo};
+use crate::debug_utils::{print_machine_state, print_program_loaded_banner};
+use crate::ascii_art::{print_info, print_bugseer_logo};
 
 pub fn run_mode_assemble(args: &Args) -> Result<(), AsmodeusError> {
     let input_path = args.input_file.as_ref()
@@ -69,7 +69,6 @@ pub fn run_mode_debug(args: &Args) -> Result<(), AsmodeusError> {
     
     if args.verbose {
         print_info(&format!("Starting Bugseer for: {}", input_path));
-        println!();
     }
 
     let machine_code = assemble_file(input_path, args)?;
@@ -81,10 +80,11 @@ pub fn run_mode_debug(args: &Args) -> Result<(), AsmodeusError> {
     machine.is_running = true;
 
     print_bugseer_logo();
-    println!("Program loaded: {} ({} words)", input_path, machine_code.len());
-    println!("Type 'h' for help\n");
-
+    
+    print_program_loaded_banner(input_path, machine_code.len());
+    
     print_machine_state(&machine);
+    
     interactive_debugger_loop(&mut machine)?;
     
     Ok(())
