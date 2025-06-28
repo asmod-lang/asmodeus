@@ -155,7 +155,7 @@ pub fn print_machine_state(machine: &MachineW) {
     
     println!("│{}│", " ".repeat(box_width - 2));
     
-    let running_color = if state.is_running { "\x1b[1m\x1b[38;5;64m" } else { "\x1b[1m\x1b[38;5;168m" };
+    let running_color = if state.is_running { "\x1b[1m\x1b[38;5;28m" } else { "\x1b[1m\x1b[38;5;168m" };
     let running_colored = format!("\x1b[1m\x1b[38;5;218mRunning:\x1b[0m {}{}{}", 
                                  running_color, state.is_running, "\x1b[0m");
     println!("{}", format_line(&running_line, &running_colored));
@@ -215,7 +215,6 @@ pub fn print_program_loaded_banner(program_path: &str, word_count: usize) {
         let parts: Vec<&str> = original_text.splitn(2, ':').collect();
         if parts.len() == 2 {
             let quick_part = format!("\x1b[1m\x1b[38;5;226m{}:", parts[0]);
-            let commands = parts[1].trim();
             
             let colored_commands = format!(
                 "\x1b[1m\x1b[38;5;208ms\x1b[1m\x1b[37m=step \x1b[1m\x1b[38;5;208mc\x1b[1m\x1b[37m=continue \x1b[1m\x1b[38;5;208md\x1b[1m\x1b[37m=display \x1b[1m\x1b[38;5;208mq\x1b[1m\x1b[37m=quit"
@@ -264,4 +263,74 @@ pub fn print_program_loaded_banner(program_path: &str, word_count: usize) {
     println!("{}  {}",
              create_border(left_box_width, "└", "─", "┘"),
              create_border(right_box_width, "└", "─", "┘"));
+}
+
+
+pub fn print_program_output(output_buffer: &[u16]) {
+    if output_buffer.is_empty() {
+        return;
+    }
+    
+    println!();
+    
+    let title = "OUTPUT";
+    let has_multiple_values = output_buffer.len() > 1;
+    
+    let mut content_lines = Vec::new();
+    let mut max_content_len = title.len();
+    
+    for (i, &value) in output_buffer.iter().enumerate() {
+        let line = if has_multiple_values {
+            format!("[{}] {} (0x{:04X})", i, value, value)
+        } else {
+            format!("{} (0x{:04X})", value, value)
+        };
+        max_content_len = max_content_len.max(line.len());
+        content_lines.push(line);
+    }
+   
+    let padding = 4;
+    let minimum_content_len = 20;
+    let box_width = (max_content_len + padding).max(minimum_content_len);
+    
+    let create_border = |left: &str, middle: &str, right: &str| -> String {
+        format!("{}{}{}", left, middle.repeat(box_width - 2), right)
+    };
+    
+    let center_text = |text: &str, color: &str| -> String {
+        let padding = (box_width - 2 - text.len()) / 2;
+        let remaining = box_width - 2 - text.len() - padding;
+        format!("│{}{}{}{}\x1b[0m│",
+                " ".repeat(padding),
+                color,
+                text,
+                " ".repeat(remaining))
+    };
+    
+    let format_line = |original_content: &str, colored_content: &str| -> String {
+        let content_len = original_content.len();
+        let padding = (box_width - 2 - content_len) / 2;
+        let remaining = box_width - 2 - content_len - padding;
+        format!("│{}{}{}\x1b[0m│",
+                " ".repeat(padding),
+                colored_content,
+                " ".repeat(remaining))
+    };
+    
+    println!("{}", create_border("┌", "─", "┐"));
+    println!("{}", center_text(title, "\x1b[1m\x1b[38;5;249m"));
+    println!("{}", create_border("├", "─", "┤"));
+    
+    for (i, line) in content_lines.iter().enumerate() {
+        let colored_line = if has_multiple_values {
+            let value = output_buffer[i];
+            format!("\x1b[1m\x1b[38;5;240m[{}]\x1b[0m \x1b[1m\x1b[38;5;117m{} (0x{:04X})\x1b[0m", 
+                   i, value, value)
+        } else {
+            let value = output_buffer[0];
+            format!("\x1b[1m\x1b[38;5;117m{} (0x{:04X})\x1b[0m", value, value)
+        };
+        println!("{}", format_line(line, &colored_line));
+    }
+    println!("{}", create_border("└", "─", "┘"));
 }

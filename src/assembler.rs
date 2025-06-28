@@ -10,7 +10,7 @@ use asmachina::MachineW;
 use crate::error::AsmodeusError;
 use crate::cli::Args;
 use crate::file_utils::read_file;
-use crate::debug_utils::{print_tokens_debug, print_ast_debug, print_machine_state};
+use crate::debug_utils::{print_tokens_debug, print_ast_debug, print_machine_state, print_program_output};
 use crate::ascii_art::{print_success, print_info};
 
 pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, AsmodeusError> {
@@ -55,7 +55,7 @@ pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, Asmodeus
 
 pub fn run_program(machine_code: &[u16], args: &Args) -> Result<(), AsmodeusError> {
     if args.verbose {
-        print_info("Creating Machine W emulator...");
+        print_info("Creating Asmachina emulator...");
     }
     
     let mut machine = MachineW::new();
@@ -68,8 +68,6 @@ pub fn run_program(machine_code: &[u16], args: &Args) -> Result<(), AsmodeusErro
     
     if args.verbose {
         print_info("Starting execution...");
-        println!("Initial machine state:");
-        print_machine_state(&machine);
         println!();
     }
     
@@ -79,17 +77,10 @@ pub fn run_program(machine_code: &[u16], args: &Args) -> Result<(), AsmodeusErro
     
     print_success("Program execution completed successfully.");
     println!();
-    println!("Final machine state:");
     print_machine_state(&machine);
     
     let output_buffer = machine.get_output_buffer();
-    if !output_buffer.is_empty() {
-        println!();
-        println!("Program output:");
-        for (i, &value) in output_buffer.iter().enumerate() {
-            println!("  [{}] {} (0x{:04X})", i, value, value);
-        }
-    }
+    print_program_output(output_buffer);
     
     Ok(())
 }
