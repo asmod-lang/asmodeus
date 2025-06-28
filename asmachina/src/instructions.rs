@@ -181,10 +181,8 @@ impl MachineW {
             io::stdout().flush().map_err(|e| MachineError::IoError {
                 message: format!("Failed to flush stdout: {}", e),
             })?;
-        } else {
-            println!("Output: {}", self.ak);
         }
-        
+
         self.output_buffer.push(self.ak);
         Ok(())
     }
