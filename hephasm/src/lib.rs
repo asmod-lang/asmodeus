@@ -31,7 +31,6 @@ pub fn assemble_program(program: &Program) -> Result<Vec<u16>, AssemblerError> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use crate::ascii_art::print_hephasm_logo;
 
     #[test]

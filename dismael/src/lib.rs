@@ -27,8 +27,6 @@ pub fn disassemble_to_string(machine_code: &[u16]) -> Result<String, Disassemble
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
     #[test]
     fn test_dismael_logo() {
         crate::ascii_art::print_dismael_logo();

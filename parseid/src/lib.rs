@@ -29,7 +29,6 @@ pub fn parse_source(source: &str) -> Result<Program, ParserError> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use crate::ascii_art::print_parseid_logo;
 
     #[test]
