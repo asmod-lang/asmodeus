@@ -1,5 +1,3 @@
-//! Execution modes
-
 use asmachina::MachineW;
 use crate::error::AsmodeusError;
 use crate::cli::{Args, Mode};
@@ -7,6 +5,7 @@ use crate::file_utils::{validate_file_extension, write_binary};
 use crate::assembler::{assemble_file, run_program, disassemble_file, run_interactive_program};
 use crate::debugger::interactive_debugger_loop;
 use crate::debug_utils::print_machine_state;
+use crate::ascii_art::{print_success, print_info, print_bugseer_logo};
 
 pub fn run_mode_assemble(args: &Args) -> Result<(), AsmodeusError> {
     let input_path = args.input_file.as_ref()
@@ -69,7 +68,7 @@ pub fn run_mode_debug(args: &Args) -> Result<(), AsmodeusError> {
     validate_file_extension(input_path, Mode::Debug)?;
     
     if args.verbose {
-        println!("🐛 Starting Bugseer for: {}", input_path);
+        print_info(&format!("Starting Bugseer for: {}", input_path));
         println!();
     }
 
@@ -81,7 +80,7 @@ pub fn run_mode_debug(args: &Args) -> Result<(), AsmodeusError> {
     })?;
     machine.is_running = true;
 
-    println!("🐛 Bugseer - Asmodeus Interactive Debugger");
+    print_bugseer_logo();
     println!("Program loaded: {} ({} words)", input_path, machine_code.len());
     println!("Type 'h' for help\n");
 
@@ -93,17 +92,21 @@ pub fn run_mode_debug(args: &Args) -> Result<(), AsmodeusError> {
 
 pub fn run_mode_interactive(args: &Args) -> Result<(), AsmodeusError> {
     let input_path = args.input_file.as_ref()
-        .ok_or_else(|| AsmodeusError::UsageError("No input file specified. Please provide a .asmod file for interactive mode.".to_string()))?;
+        .ok_or_else(|| AsmodeusError::UsageError("No input file specified for interactive mode. Please provide a .asmod file to run interactively.".to_string()))?;
     
     validate_file_extension(input_path, Mode::Interactive)?;
     
     if args.verbose {
-        println!("🚀 Starting Asmodeus Interactive Mode: {}", input_path);
-        println!("Real-time character I/O enabled");
+        print_info(&format!("Starting interactive mode for: {}", input_path));
         println!();
     }
-    
+
     let machine_code = assemble_file(input_path, args)?;
+    
+    println!("\x1b[1m\x1b[38;5;39m🔤 Asmodeus Interactive Mode\x1b[0m");
+    println!("Character-based I/O enabled - type characters for real-time processing");
+    println!("Press Ctrl+C to interrupt\n");
+    
     run_interactive_program(&machine_code, args)?;
     
     Ok(())
