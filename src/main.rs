@@ -1,5 +1,3 @@
-//! Asmodeus - Machine W Emulator and Assembler
-
 use std::process;
 
 mod error;
@@ -9,6 +7,7 @@ mod debug_utils;
 mod assembler;
 mod debugger;
 mod modes;
+mod ascii_art;
 
 use cli::{parse_args, print_help, Mode};
 use modes::{run_mode_assemble, run_mode_run, run_mode_disassemble, run_mode_debug, run_mode_interactive};
