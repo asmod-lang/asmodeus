@@ -29,9 +29,16 @@ impl DirectiveProcessor {
             "RPA" => {
                 memory[current_address] = 0;
             }
+            "MAKRO" | "KONM" | "NAZWA_LOKALNA" => {
+                // handled in macro processing
+                // valid but dont produce machine code
+            }
             _ => {
-                // unknown directive - ignoring for now
-                // TODO: handle unknown directives
+                // unknown directive
+                return Err(AssemblerError::InvalidOpcode {
+                    opcode: directive.name.clone(),
+                    line: directive.line,
+                });
             }
         }
         Ok(())
