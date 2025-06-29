@@ -2,9 +2,9 @@ pub fn print_debugger_help() {
     println!("🐛 Bugseer Debugger - Available commands:");
     println!();
     println!("  EXECUTION:");
-    println!("    s, step           - Execute one instruction (F7)");
-    println!("    n, next           - Execute one instruction (F9) [alias for step]");
-    println!("    c, continue       - Continue execution until halt or breakpoint (F10)");
+    println!("    s, step           - Execute one instruction");
+    println!("    n, next           - Alias for step (same functionality)");
+    println!("    c, continue       - Continue execution until halt or breakpoint");
     println!();
     println!("  INSPECTION:");
     println!("    d, display        - Display current machine state");
