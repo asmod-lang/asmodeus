@@ -1,0 +1,6 @@
+; File with assembler error
+; References undefined symbol
+
+start:
+    POB undefined_symbol    ; This symbol is not defined anywhere
+    STP
