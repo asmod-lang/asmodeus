@@ -9,6 +9,7 @@ mod bugseer;
 mod modes;
 mod ascii_art;
 mod examples_manager;
+mod template_generator;
 
 use cli::{parse_args, print_help, Mode};
 use modes::{run_mode_assemble, run_mode_run, run_mode_disassemble, run_mode_debug, run_mode_interactive};
@@ -34,6 +35,7 @@ fn main() {
         Mode::Interactive => run_mode_interactive(&args),
         Mode::Disassemble => run_mode_disassemble(&args),
         Mode::Examples => examples_manager::handle_examples_command(&args),
+        Mode::New => template_generator::handle_new_command(&args),
     };
 
     if let Err(e) = result {
