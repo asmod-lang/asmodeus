@@ -55,14 +55,22 @@ impl AdvancedDisassembler {
                     // continue to next instruction too
                     to_analyze.push(address + 1);
                 }
+                0b10000 => {
+                    // SOZ - conditional jump
+                    if (argument as usize) < machine_code.len() {
+                        to_analyze.push(argument);
+                    }
+                    // continue to next instruction too
+                    to_analyze.push(address + 1);
+                }
                 0b00111 => {
                     // STP - stop
                 }
                 0b01101 => {
                     // PWR - return from interrupt dont continue normally
                 }
-                0b00001..=0b00110 | 0b01000..=0b01100 | 0b01110..=0b01111 => {
-                    // other valid instructions - continue to next
+                0b00001..=0b00110 | 0b01000..=0b01100 | 0b01110..=0b01111 | 0b10001..=0b10011 => {
+                    // other valid instructions (including extended set) - continue to next
                     to_analyze.push(address + 1);
                 }
                 _ => {
