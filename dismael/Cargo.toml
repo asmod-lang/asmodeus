@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 thiserror = "1.0"
+shared = { path = "../shared" }
 
 [dev-dependencies]
 hephasm = { path = "../hephasm" }
