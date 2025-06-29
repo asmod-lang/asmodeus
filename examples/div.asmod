@@ -7,7 +7,7 @@ LOOP: POB A
       ŁAD COUNT
       SOB LOOP
 END:  POB COUNT
-      WYJSCIE
+      // WYJSCIE
       STP
 A: RST 6
 B: RST 2
