@@ -19,7 +19,11 @@ fn test_instruction_without_operand() {
     
     assert_eq!(result.len(), 1);
     assert!(result[0].contains("STP"));
-    assert!(!result[0].contains("0")); // should not have operand
+    
+    // ; 0000: 3800\n    STP"
+    let lines: Vec<&str> = result[0].lines().collect();
+    let instruction_line = lines.iter().find(|line| line.trim_start().starts_with("STP")).unwrap();
+    assert_eq!(instruction_line.trim(), "STP");
 }
 
 #[test]
