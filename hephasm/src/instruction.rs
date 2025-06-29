@@ -1,7 +1,8 @@
 //! instruction assembly and opcode mapping
 
 use crate::error::AssemblerError;
-use parseid::ast::Instruction;
+use parseid::ast::{Instruction, AddressingMode};
+use shared::{addressing_mode_bits, encode_instruction};
 
 pub struct InstructionAssembler;
 
@@ -13,17 +14,30 @@ impl InstructionAssembler {
     pub fn assemble_instruction(&self, instruction: &Instruction, argument: u16) -> Result<u16, AssemblerError> {
         let opcode = self.get_opcode(&instruction.opcode, instruction.line)?;
         
-        // ensure argument fits in 11 bits
-        if argument > 2047 {
+        let addressing_mode_bits = if let Some(operand) = &instruction.operand {
+            match &operand.addressing_mode {
+                AddressingMode::Direct => addressing_mode_bits::DIRECT,
+                AddressingMode::Immediate => addressing_mode_bits::IMMEDIATE,
+                AddressingMode::Indirect => addressing_mode_bits::INDIRECT,
+                AddressingMode::MultipleIndirect => addressing_mode_bits::MULTIPLE_INDIRECT,
+                AddressingMode::Register => addressing_mode_bits::REGISTER,
+                AddressingMode::RegisterIndirect => addressing_mode_bits::REGISTER_INDIRECT,
+                AddressingMode::BaseRegister { .. } => addressing_mode_bits::BASE_REGISTER,
+                AddressingMode::Relative => addressing_mode_bits::RELATIVE,
+                AddressingMode::Indexed { .. } => addressing_mode_bits::DIRECT,
+            }
+        } else {
+            addressing_mode_bits::DIRECT
+        };
+        
+        if argument > 255 {
             return Err(AssemblerError::AddressOutOfBounds {
                 address: argument,
                 line: instruction.line,
             });
         }
 
-        // combine opcode (5 bits) and argument (11 bits)
-        let machine_code = ((opcode as u16) << 11) | (argument & 0x07FF);
-        Ok(machine_code)
+        Ok(encode_instruction(opcode, addressing_mode_bits, argument))
     }
 
     pub fn get_opcode(&self, instruction: &str, line: usize) -> Result<u8, AssemblerError> {

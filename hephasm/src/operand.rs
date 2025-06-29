@@ -11,38 +11,28 @@ impl OperandResolver {
         Self
     }
 
-    pub fn resolve_operand(&self, operand: &Operand, symbol_table: &SymbolTable, current_address: u16, line: usize) -> Result<u16, AssemblerError> {
-        // try to resolve as symbol regardless of addressing mode
-        if let Some(address) = symbol_table.get_address(&operand.value) {
-            return Ok(address);
-        }
-
+    pub fn resolve_symbol_to_address(&self, operand: &Operand, symbol_table: &SymbolTable, current_address: u16, line: usize) -> Result<u16, AssemblerError> {
         match &operand.addressing_mode {
-            AddressingMode::Immediate => {
-                // immediate addressing, parse as number or fail with undefined symbol
-                match self.parse_number(&operand.value, line) {
-                    Ok(num) => Ok(num),
-                    Err(_) if self.is_identifier(&operand.value) => {
-                        Err(AssemblerError::UndefinedSymbol {
-                            symbol: operand.value.clone(),
-                            line,
-                        })
+            AddressingMode::Direct => {
+                // direct addressing, try to resolve symbol first, then parse as number
+                if let Some(addr) = symbol_table.get_address(&operand.value) {
+                    Ok(addr)
+                } else {
+                    match self.parse_number(&operand.value, line) {
+                        Ok(num) => Ok(num),
+                        Err(_) if self.is_identifier(&operand.value) => {
+                            Err(AssemblerError::UndefinedSymbol {
+                                symbol: operand.value.clone(),
+                                line,
+                            })
+                        }
+                        Err(e) => Err(e),
                     }
-                    Err(e) => Err(e),
                 }
             }
-            AddressingMode::Direct => {
-                // direct addressing, parse as number or fail with undefined symbol
-                match self.parse_number(&operand.value, line) {
-                    Ok(num) => Ok(num),
-                    Err(_) if self.is_identifier(&operand.value) => {
-                        Err(AssemblerError::UndefinedSymbol {
-                            symbol: operand.value.clone(),
-                            line,
-                        })
-                    }
-                    Err(e) => Err(e),
-                }
+            AddressingMode::Immediate => {
+                // immediate addressing, parse as number
+                self.parse_number(&operand.value, line)
             }
             AddressingMode::Indirect => {
                 // indirect addressing, parse as number or fail with undefined symbol
@@ -57,9 +47,30 @@ impl OperandResolver {
                     Err(e) => Err(e),
                 }
             }
+            AddressingMode::MultipleIndirect => {
+                // multiple indirect addressing, parse as number or fail with undefined symbol
+                match self.parse_number(&operand.value, line) {
+                    Ok(num) => Ok(num),
+                    Err(_) if self.is_identifier(&operand.value) => {
+                        Err(AssemblerError::UndefinedSymbol {
+                            symbol: operand.value.clone(),
+                            line,
+                        })
+                    }
+                    Err(e) => Err(e),
+                }
+            }
             AddressingMode::Register => {
                 // register addressing, extract register number
                 self.parse_register(&operand.value, line)
+            }
+            AddressingMode::RegisterIndirect => {
+                // register indirect addressing, extract register number
+                self.parse_register(&operand.value, line)
+            }
+            AddressingMode::BaseRegister { base: _, offset } => {
+                // base register addressing, parse offset
+                self.parse_number(offset, line)
             }
             AddressingMode::Relative => {
                 // relative addressing, calculate offset from current position
@@ -88,19 +99,6 @@ impl OperandResolver {
                         }
                         Err(e) => Err(e),
                     }
-                }
-            }
-            _ => {
-                // other addressing modes, parse as number or fail with undefined symbol
-                match self.parse_number(&operand.value, line) {
-                    Ok(num) => Ok(num),
-                    Err(_) if self.is_identifier(&operand.value) => {
-                        Err(AssemblerError::UndefinedSymbol {
-                            symbol: operand.value.clone(),
-                            line,
-                        })
-                    }
-                    Err(e) => Err(e),
                 }
             }
         }
