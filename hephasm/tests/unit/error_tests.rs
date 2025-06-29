@@ -7,7 +7,6 @@ fn test_error_undefined_symbol() {
     
     let error = result.unwrap_err();
     let error_string = error.to_string();
-    println!("Actual error: {}", error_string); // Debug print: can be removed later (TODO)
     assert!(error_string.contains("Undefined symbol") || error_string.contains("undefined_label"));
 }
 
