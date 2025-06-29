@@ -107,7 +107,7 @@ impl Assembler {
             match element {
                 ProgramElement::Instruction(inst) => {
                     let argument = if let Some(operand) = &inst.operand {
-                        self.operand_resolver.resolve_operand(operand, &self.symbol_table, self.current_address, inst.line)?
+                        self.operand_resolver.resolve_symbol_to_address(operand, &self.symbol_table, self.current_address, inst.line)?
                     } else {
                         0
                     };
