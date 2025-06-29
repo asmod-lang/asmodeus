@@ -1,8 +1,0 @@
-
-; Simple character echo program
-; Reads a character and outputs it
-
-start:
-    WPR             ; Read character from input
-    WYJSCIE         ; Output the character
-    STP             ; Stop

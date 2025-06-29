@@ -1,8 +1,0 @@
-start:
-      POB value
-      ŁAD result
-      WYJSCIE
-      STP
-
-value: RST 42
-result: RPA

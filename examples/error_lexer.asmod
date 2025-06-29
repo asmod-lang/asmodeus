@@ -1,6 +1,0 @@
-; File with lexical error
-; Contains invalid token that will cause lexer error
-
-start:
-    POB @invalid    ; @ is not a valid character
-    STP
