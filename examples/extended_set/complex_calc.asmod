@@ -1,0 +1,14 @@
+start:
+    ; (15 * 3) / 5 + 2
+    POB #15      ; AK = 15
+    MNO #3       ; AK = 15 * 3 = 45
+    DZI #5       ; AK = 45 / 5 = 9
+    DOD #2       ; AK = 9 + 2 = 11
+    WYJSCIE      ; (11)
+    
+    ; 20 % 7
+    POB #20      ; AK = 20
+    MOD #7       ; AK = 20 % 7 = 6
+    WYJSCIE      ; (6)
+    
+    STP
