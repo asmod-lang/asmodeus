@@ -106,6 +106,71 @@ pub fn run_mode_disassemble(args: &Args) -> Result<(), AsmodeusError> {
     Ok(())
 }
 
+pub fn run_mode_check(args: &Args) -> Result<(), AsmodeusError> {
+    let input_path = args.input_file.as_ref()
+        .ok_or_else(|| AsmodeusError::UsageError("No input file specified for check mode".to_string()))?;
+    
+    validate_file_extension(input_path, Mode::Check)?;
+    
+    if args.verbose {
+        print_info(&format!("Checking syntax of: {}", input_path));
+    }
+
+    let source = std::fs::read_to_string(input_path)
+        .map_err(|e| AsmodeusError::IoError(e))?;
+    
+    if args.verbose {
+        print_info("📝 Tokenizing source code...");
+    }
+    
+    let tokens = lexariel::tokenize(&source)?;
+    
+    if args.verbose {
+        print_info(&format!("✅ Tokenization successful: {} tokens found", tokens.len()));
+        print_info("🔍 Parsing tokens to AST...");
+    }
+    
+    let ast = parseid::parse(tokens)?;
+    
+    if args.verbose {
+        print_info(&format!("✅ Parsing successful: {} program elements found", ast.elements.len()));
+        
+        let mut instructions = 0;
+        let mut directives = 0;
+        let mut macros = 0;
+        let mut macro_calls = 0;
+        let mut labels = 0;
+        
+        for element in &ast.elements {
+            match element {
+                parseid::ProgramElement::Instruction(_) => instructions += 1,
+                parseid::ProgramElement::Directive(_) => directives += 1,
+                parseid::ProgramElement::MacroDefinition(_) => macros += 1,
+                parseid::ProgramElement::MacroCall(_) => macro_calls += 1,
+                parseid::ProgramElement::LabelDefinition(_) => labels += 1,
+            }
+        }        
+
+        println!("📊 Program analysis:");
+        println!("   Instructions: {}", instructions);
+        println!("   Labels: {}", labels);
+        println!("   Data directives: {}", directives);
+        println!("   Macro definitions: {}", macros);
+        println!("   Macro calls: {}", macro_calls);
+    }
+    
+    println!("✅ {}: Syntax check passed", input_path);
+    
+    if args.extended {
+        if args.verbose {
+            print_info("🔍 Checking for extended instructions...");
+        }
+        println!("ℹ️  Extended instruction set enabled");
+    }
+    
+    Ok(())
+}
+
 pub fn run_mode_debug(args: &Args) -> Result<(), AsmodeusError> {
     let input_path = args.input_file.as_ref()
         .ok_or_else(|| AsmodeusError::UsageError("No input file specified for debug mode. Please provide a .asmod file to debug.".to_string()))?;

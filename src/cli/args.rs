@@ -9,6 +9,7 @@ pub enum Mode {
     Interactive,
     Examples,
     New,
+    Check,
     Help,
 }
 

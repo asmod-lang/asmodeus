@@ -16,6 +16,7 @@ pub fn print_help() {
     print_command("live", "Alias for interactive mode");
     print_command("examples", "Manage and run example programs"); 
     print_command("new", "Create new project from template");
+    print_command("check", "Check syntax without assembling");
     println!();
     
     println!("OPTIONS:");
@@ -40,6 +41,7 @@ pub fn print_help() {
     print_command("asmod examples run hello", "# Run hello example");
     print_command("asmod new hello", "# Create new hello world project");
     print_command("asmod new calc --template calc", "# Create calculator from template");
+    print_command("asmod check program.asmod", "# Quick syntax check");
     print_command("asmod program.asmod", "# Run (default command)");
     println!();
     

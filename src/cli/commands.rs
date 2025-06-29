@@ -60,6 +60,10 @@ pub fn parse_args() -> Result<Args, AsmodeusError> {
             
             i = args.len();
         }
+        Some("check") => {
+            mode = Mode::Check;
+            i = 2;
+        }
         Some("--help") | Some("-h") => {
             mode = Mode::Help;
             i = 2;
