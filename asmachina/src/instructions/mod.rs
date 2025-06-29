@@ -4,6 +4,7 @@ mod control;
 mod stack;
 mod interrupts;
 mod io;
+mod extended_arithmetics;
 
 use crate::error::MachineError;
 use crate::machine::MachineW;
@@ -38,6 +39,11 @@ impl MachineW {
             // I/O instructions
             0b01110 => self.execute_wejscie(), // WEJSCIE - Input
             0b01111 => self.execute_wyjscie(), // WYJSCIE - Output
+           
+            // Extended arithmetic instructions
+            0b10001 => self.execute_mno(), // MNO - Multiply
+            0b10010 => self.execute_dzi(), // DZI - Divide
+            0b10011 => self.execute_mod(), // MOD - Modulo
             
             // Invalid opcode
             _ => Err(MachineError::InvalidOpcode { opcode: self.kod }),
