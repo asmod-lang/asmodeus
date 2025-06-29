@@ -21,6 +21,7 @@ pub fn print_help() {
     print_command("-v, --verbose", "Verbose output");
     print_command("--debug", "Debug output");
     print_command("-e, --extended", "Enable extended instruction set");
+    print_command("-w, --watch", "Watch file for changes and auto-rerun");
     print_command("-h, --help", "Show this help message");
     println!();
     
@@ -28,6 +29,7 @@ pub fn print_help() {
     print_command("asmod run program.asmod", "# Run assembly program");
     print_command("asmod run --debug program.asmod", "# Run with debug output");
     print_command("asmod run --extended program.asmod", "# Run with extended instruction set");
+    print_command("asmod run --watch program.asmod", "# Watch file and auto-rerun on changes");
     print_command("asmod debug program.asmod", "# Interactive debugger");
     print_command("asmod interactive char_io.asmod", "# Real-time character I/O");
     print_command("asmod assemble program.asmod", "# Assemble to binary");

@@ -15,6 +15,7 @@ pub fn parse_args() -> Result<Args, AsmodeusError> {
     let mut verbose = false;
     let mut debug = false;
     let mut extended = false;
+    let mut watch = false;
     
     let mut i;
     
@@ -72,8 +73,9 @@ pub fn parse_args() -> Result<Args, AsmodeusError> {
                 }
             }
             "--verbose" | "-v" => verbose = true,
-            "--debug" => debug = true,
+            "--debug-mode" => debug = true,
             "--extended" | "-e" => extended = true,
+            "--watch" | "-w" => watch = true,
             arg if arg.starts_with('-') => {
                 return Err(AsmodeusError::UsageError(format!("Unknown option: {}", arg)));
             }
@@ -95,5 +97,6 @@ pub fn parse_args() -> Result<Args, AsmodeusError> {
         verbose,
         debug,
         extended,
+        watch,
     })
 }
