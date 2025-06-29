@@ -3,7 +3,7 @@ use crate::error::AsmodeusError;
 use crate::cli::{Args, Mode};
 use crate::file_utils::{validate_file_extension, write_binary};
 use crate::assembler::{assemble_file, run_program, disassemble_file, run_interactive_program};
-use crate::debugger::interactive_debugger_loop;
+use crate::bugseer::interactive_debugger_loop;
 use crate::debug_utils::{print_machine_state, print_program_loaded_banner};
 use crate::ascii_art::{print_info, print_bugseer_logo};
 

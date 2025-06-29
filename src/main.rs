@@ -5,7 +5,7 @@ mod cli;
 mod file_utils;
 mod debug_utils;
 mod assembler;
-mod debugger;
+mod bugseer;
 mod modes;
 mod ascii_art;
 
