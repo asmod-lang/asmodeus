@@ -17,4 +17,5 @@ pub struct Args {
     pub output_file: Option<String>,
     pub verbose: bool,
     pub debug: bool,
+    pub extended: bool,
 }
