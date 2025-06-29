@@ -25,8 +25,19 @@ pub fn assemble_source(source: &str) -> Result<Vec<u16>, Box<dyn std::error::Err
     Ok(assembler.assemble(&program)?)
 }
 
+pub fn assemble_source_extended(source: &str, extended_mode: bool) -> Result<Vec<u16>, Box<dyn std::error::Error>> {
+    let program = parseid::parse_source(source)?;
+    let mut assembler = Assembler::new_with_extended(extended_mode);
+    Ok(assembler.assemble(&program)?)
+}
+
 pub fn assemble_program(program: &Program) -> Result<Vec<u16>, AssemblerError> {
     let mut assembler = Assembler::new();
+    assembler.assemble(program)
+}
+
+pub fn assemble_program_extended(program: &Program, extended_mode: bool) -> Result<Vec<u16>, AssemblerError> {
+    let mut assembler = Assembler::new_with_extended(extended_mode);
     assembler.assemble(program)
 }
 

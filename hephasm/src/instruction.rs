@@ -4,11 +4,21 @@ use crate::error::AssemblerError;
 use parseid::ast::{Instruction, AddressingMode};
 use shared::{addressing_mode_bits, encode_instruction};
 
-pub struct InstructionAssembler;
+pub struct InstructionAssembler {
+    extended_mode: bool,
+}
 
 impl InstructionAssembler {
     pub fn new() -> Self {
-        Self
+        Self {
+            extended_mode: false,
+        }
+    }
+
+    pub fn new_with_extended(extended_mode: bool) -> Self {
+        Self {
+            extended_mode,
+        }
     }
 
     pub fn assemble_instruction(&self, instruction: &Instruction, argument: u16) -> Result<u16, AssemblerError> {
@@ -58,6 +68,38 @@ impl InstructionAssembler {
             "PWR" => Ok(0b01101),
             "WPR" | "WEJSCIE" => Ok(0b01110),
             "WYJ" | "WYJSCIE" => Ok(0b01111),
+
+            // extended opcodes
+            "MNO" => {
+                if self.extended_mode {
+                    Ok(0b10001)
+                } else {
+                    Err(AssemblerError::ExtendedInstructionNotEnabled {
+                        instruction: instruction.to_string(),
+                        line,
+                    })
+                }
+            },
+            "DZI" => {
+                if self.extended_mode {
+                    Ok(0b10010)
+                } else {
+                    Err(AssemblerError::ExtendedInstructionNotEnabled {
+                        instruction: instruction.to_string(),
+                        line,
+                    })
+                }
+            },
+            "MOD" => {
+                if self.extended_mode {
+                    Ok(0b10011)
+                } else {
+                    Err(AssemblerError::ExtendedInstructionNotEnabled {
+                        instruction: instruction.to_string(),
+                        line,
+                    })
+                }
+            },
             _ => Err(AssemblerError::InvalidOpcode {
                 opcode: instruction.to_string(),
                 line,
