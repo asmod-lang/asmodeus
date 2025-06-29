@@ -4,7 +4,8 @@ members = [
     "lexariel", 
     "parseid",
     "hephasm",
-    "dismael"
+    "dismael",
+    "shared",
 ]
 
 [package]
@@ -18,6 +19,7 @@ lexariel = { path = "lexariel" }
 parseid = { path = "parseid" }
 hephasm = { path = "hephasm" }
 dismael = { path = "dismael" }
+shared = { path = "shared" }
 clap = { version = "4.0", features = ["derive"] }
 anyhow = "1.0"
 thiserror = "1.0"
