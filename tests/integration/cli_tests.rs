@@ -217,15 +217,6 @@ fn test_cli_error_exit_code() {
     assert_eq!(output.status.code(), Some(1));
 }
 
-fn get_binary_path() -> String {
-    let target_dir = if cfg!(debug_assertions) {
-        "target/debug"
-    } else {
-        "target/release"
-    };
-    format!("{}/asmodeus", target_dir)
-}
-
 #[test]
 fn test_extended_flag_assembles_extended_instructions() {
     let temp_dir = TempDir::new().unwrap();

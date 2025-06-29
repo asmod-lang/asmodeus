@@ -269,15 +269,6 @@ fn test_large_program_integration() {
     assert_eq!(machine.get_output_buffer(), &[5050]);
 }
 
-fn get_binary_path() -> String {
-    let target_dir = if cfg!(debug_assertions) {
-        "target/debug"
-    } else {
-        "target/release"
-    };
-    format!("{}/asmodeus", target_dir)
-}
-
 #[test]
 fn test_full_pipeline_extended_instructions() {
     let temp_dir = TempDir::new().unwrap();
