@@ -1,0 +1,15 @@
+LOOP: POB A
+      ODE B
+      ŁAD A
+      SOM END
+      POB COUNT
+      DOD ONE
+      ŁAD COUNT
+      SOB LOOP
+END:  POB COUNT
+      WYJ
+      STP
+A: RST 6
+B: RST 2
+COUNT: RST 0
+ONE: RST 1

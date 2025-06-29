@@ -1,0 +1,11 @@
+; Simple addition program
+; Calculates 25 + 17 and outputs the result
+
+start:
+    POB num1        ; Load first number
+    DOD num2        ; Add second number
+    WYJ             ; Output result
+    STP             ; Stop
+
+num1: RST 25        ; First number
+num2: RST 17        ; Second number

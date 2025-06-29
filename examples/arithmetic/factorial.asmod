@@ -1,0 +1,56 @@
+; Calculate factorial of 5 (5! = 120)
+; Simple iterative approach
+
+start:
+    POB one         ; Load 1 into AK (initial result)
+    LAD result      ; Store 1 as initial result
+    POB n           ; Load n=5 into AK
+    LAD counter     ; Store as counter
+
+factorial_loop:
+    POB counter     ; Load current counter
+    SOZ done        ; If counter == 0, we're done
+    
+    ; Multiply result by counter
+    ; result = result * counter
+    LAD multiplier  ; Store counter as multiplier
+    POB result      ; Load current result
+    LAD temp_result ; Store current result as temp
+    
+    ; Initialize multiplication: result will be built by addition
+    POB zero        ; Load 0
+    LAD result      ; Clear result to 0
+    
+mult_loop:
+    POB multiplier  ; Load multiplier
+    SOZ mult_done   ; If multiplier == 0, multiplication done
+    
+    POB result      ; Load current result
+    DOD temp_result ; Add temp_result to result
+    LAD result      ; Store back to result
+    
+    POB multiplier  ; Load multiplier
+    ODE one         ; Decrement multiplier
+    LAD multiplier  ; Store back
+    SOB mult_loop   ; Continue multiplication
+    
+mult_done:
+    ; Decrement counter and continue
+    POB counter     ; Load counter
+    ODE one         ; Decrement counter
+    LAD counter     ; Store back
+    SOB factorial_loop ; Continue factorial loop
+    
+done:
+    POB result      ; Load final result
+    WYJSCIE         ; Output result (should be 120)
+    STP             ; Stop
+
+; Data section
+n:           RST 5       ; Number to calculate factorial of
+one:         RST 1       ; Constant 1
+zero:        RST 0       ; Constant 0
+result:      RST 1       ; Result (initialized to 1)
+counter:     RST 0       ; Counter
+multiplier:  RST 0       ; Multiplier for multiplication
+temp_result: RST 0       ; Temporary storage for multiplication
