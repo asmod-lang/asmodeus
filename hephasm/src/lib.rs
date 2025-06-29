@@ -1,4 +1,4 @@
-//! Hephasm - Assembler for Asmodeus assembly language
+//! Hephasm - Assembler for Asmodeus language
 //! Converts AST into binary machine code for Machine W (asmachine)
 
 mod error;
@@ -8,13 +8,14 @@ mod macro_processor;
 mod instruction;
 mod operand;
 mod directive;
-mod core;
 mod ascii_art;
+mod passes;
+mod hephasm;
 
 pub use error::AssemblerError;
 pub use types::{Symbol, SymbolType, ExpandedMacro};
 pub use symbol_table::SymbolTable;
-pub use core::Assembler;
+pub use hephasm::Assembler;
 
 use parseid::ast::Program;
 
