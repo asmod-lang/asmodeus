@@ -1,4 +1,4 @@
-; Program for finding max (number) in array (MAX(COUNT, TAB))
+; example: Program for finding max (number) in array (MAX(COUNT, TAB))
 
 ; Initialization - getting the array size and setting up the maximum
 POB TAB

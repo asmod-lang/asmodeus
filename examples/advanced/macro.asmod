@@ -1,4 +1,4 @@
-; Test program with macros
+; example: Simple macro usage 
 
 MAKRO add_and_output val1 val2
     POB val1

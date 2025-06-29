@@ -1,5 +1,5 @@
-; Calculate factorial of 5 (5! = 120)
-; Simple iterative approach
+; example: Calculating factorial of 5 
+; Simple iterative approach (5! = 120)
 
 start:
     POB one         ; Load 1 into AK (initial result)

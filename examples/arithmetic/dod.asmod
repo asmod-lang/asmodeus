@@ -1,4 +1,4 @@
-; Simple addition program
+; example: Simple addition program
 ; Calculates 25 + 17 and outputs the result
 
 start:

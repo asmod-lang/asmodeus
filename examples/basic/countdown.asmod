@@ -1,4 +1,4 @@
-; Countdown program
+; example: Countdown program
 ; Counts from 3 down to 0 and outputs each value
 
 start:

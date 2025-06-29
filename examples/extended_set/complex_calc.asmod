@@ -1,3 +1,5 @@
+; example: Complex calculations with extended instruction set
+
 start:
     ; (15 * 3) / 5 + 2
     POB #15      ; AK = 15

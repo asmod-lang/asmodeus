@@ -1,3 +1,5 @@
+; example: Multiplication using extended instruction set
+
 start:
     POB #10      ; AK = 10
     MNO #5       ; * 5 (50)

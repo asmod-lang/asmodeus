@@ -1,4 +1,4 @@
-; File with assembler error
+; example: File with assembler error
 ; References undefined symbol
 
 start:

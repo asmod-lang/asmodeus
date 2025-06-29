@@ -1,4 +1,4 @@
-; File with parser error
+; example: File with parser error
 ; Missing operand for instruction
 
 start:
