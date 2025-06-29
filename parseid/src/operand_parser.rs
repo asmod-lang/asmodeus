@@ -44,7 +44,7 @@ impl OperandParser {
                 // indirect or multiple indirect addressing
                 Self::parse_indirect_operand(navigator)
             }
-            TokenKind::Identifier if token.value.to_uppercase().starts_with('R') => {
+            TokenKind::Identifier if Self::is_register(&token.value) => {
                 // register addressing
                 Self::parse_register_operand(navigator)
             }
@@ -95,6 +95,16 @@ impl OperandParser {
             }
         }
     }
+
+fn is_register(value: &str) -> bool {
+    let upper = value.to_uppercase();
+    if !upper.starts_with('R') || upper.len() < 2 {
+        return false;
+    }
+    
+    let rest = &upper[1..];
+    rest.chars().all(|c| c.is_ascii_digit())
+}
 
     fn parse_indirect_operand(navigator: &mut TokenNavigator) -> Result<Operand, ParserError> {
         navigator.consume(TokenKind::Punctuation, "[")?;
