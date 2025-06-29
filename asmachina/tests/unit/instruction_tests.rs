@@ -71,14 +71,14 @@ fn test_pob_instruction() {
 fn test_sob_instruction() {
     let mut machine = MachineW::new();
     
-    let sob_instruction = (0b00101 << 11) | 500;
+    let sob_instruction = (0b00101 << 11) | 200;
     machine.memory[0] = sob_instruction;
     
     machine.l = 0;
     machine.is_running = true;
     
     assert!(machine.step().is_ok());
-    assert_eq!(machine.l, 500); // L set to target address
+    assert_eq!(machine.l, 200); // L set to target address
 }
 
 #[test]
@@ -100,13 +100,13 @@ fn test_soz_instruction_jump_when_zero() {
     let mut machine = MachineW::new();
     
     machine.ak = 0;
-    let soz_instruction = (0b10000 << 11) | 500;
+    let soz_instruction = (0b10000 << 11) | 200;
     machine.memory[0] = soz_instruction;
     machine.l = 0;
     machine.is_running = true;
     
     assert!(machine.step().is_ok());
-    assert_eq!(machine.l, 500); // L set to target address (jump taken)
+    assert_eq!(machine.l, 200); // L set to target address (jump taken)
 }
 
 #[test]
@@ -114,7 +114,7 @@ fn test_soz_instruction_no_jump_when_nonzero() {
     let mut machine = MachineW::new();
     
     machine.ak = 100;
-    let soz_instruction = (0b10000 << 11) | 500;
+    let soz_instruction = (0b10000 << 11) | 200;
     machine.memory[0] = soz_instruction;
     machine.l = 0;
     machine.is_running = true;
@@ -128,7 +128,7 @@ fn test_soz_instruction_no_jump_when_negative() {
     let mut machine = MachineW::new();
     
     machine.ak = 0x8000;
-    let soz_instruction = (0b10000 << 11) | 500;
+    let soz_instruction = (0b10000 << 11) | 200;
     machine.memory[0] = soz_instruction;
     machine.l = 0;
     machine.is_running = true;
@@ -155,7 +155,7 @@ fn test_conditional_jump_positive() {
     let mut machine = MachineW::new();
     
     machine.ak = 100;
-    let som_instruction = (0b00110 << 11) | 500;
+    let som_instruction = (0b00110 << 11) | 200;
     machine.memory[0] = som_instruction;
     machine.l = 0;
     machine.is_running = true;
@@ -169,11 +169,11 @@ fn test_conditional_jump_negative() {
     let mut machine = MachineW::new();
     
     machine.ak = 0x8000; // negative value (MSB set)
-    let som_instruction = (0b00110 << 11) | 500;
+    let som_instruction = (0b00110 << 11) | 200;
     machine.memory[0] = som_instruction;
     machine.l = 0;
     machine.is_running = true;
     
     assert!(machine.step().is_ok());
-    assert_eq!(machine.l, 500); // L set to target address (jump taken)
+    assert_eq!(machine.l, 200); // L set to target address (jump taken)
 }
