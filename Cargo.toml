@@ -25,6 +25,7 @@ anyhow = "1.0"
 thiserror = "1.0"
 tempfile = "3.20.0"
 fs = "0.0.5"
+chrono = "0.4.41"
 
 [[bin]]
 name = "asmodeus"

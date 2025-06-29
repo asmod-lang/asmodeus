@@ -8,6 +8,7 @@ pub enum Mode {
     Debug,
     Interactive,
     Examples,
+    New,
     Help,
 }
 
