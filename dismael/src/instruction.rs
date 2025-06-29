@@ -20,11 +20,13 @@ impl InstructionDecoder {
         let (mnemonic, operand, is_data_result) = if is_data {
             ("RST".to_string(), Some(word.to_string()), true)
         } else {
+            let addressing_mode = self.detect_addressing_mode(word);
+            
             match opcode {
-                0b00001 => ("DOD".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
-                0b00010 => ("ODE".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
-                0b00011 => ("ŁAD".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
-                0b00100 => ("POB".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
+                0b00001 => ("DOD".to_string(), Some(self.format_operand(argument, addressing_mode)), false),
+                0b00010 => ("ODE".to_string(), Some(self.format_operand(argument, addressing_mode)), false),
+                0b00011 => ("ŁAD".to_string(), Some(self.format_operand(argument, addressing_mode)), false),
+                0b00100 => ("POB".to_string(), Some(self.format_operand(argument, addressing_mode)), false),
                 0b00101 => ("SOB".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
                 0b00110 => ("SOM".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
                 0b10000 => ("SOZ".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
@@ -58,16 +60,19 @@ impl InstructionDecoder {
         })
     }
 
-    pub fn _detect_addressing_mode(&self, opcode: u8, _argument: u16) -> AddressingMode {
-        match opcode {
-            0b00101 | 0b00110 | 0b10000 => AddressingMode::Direct, // jump instructions
-            0b01100 => AddressingMode::Direct, // MSK
-            0b01110 | 0b01111 => AddressingMode::Direct, // I/O
-            _ => {
-                // for other instructions, direct addressing
-                // TODO: analyze patterns or have additional metadata
-                AddressingMode::Direct
-            }
+    pub fn detect_addressing_mode(&self, instruction: u16) -> AddressingMode {
+        use shared::{extract_addressing_mode, addressing_mode_bits};
+        
+        let mode_bits = extract_addressing_mode(instruction);
+        
+        match mode_bits {
+            bits if bits == addressing_mode_bits::DIRECT => AddressingMode::Direct,
+            bits if bits == addressing_mode_bits::IMMEDIATE => AddressingMode::Immediate,
+            bits if bits == addressing_mode_bits::INDIRECT => AddressingMode::Indirect,
+            bits if bits == addressing_mode_bits::REGISTER => AddressingMode::Register,
+            bits if bits == addressing_mode_bits::RELATIVE => AddressingMode::Relative,
+            // default to Direct
+            _ => AddressingMode::Direct,
         }
     }
 
@@ -92,7 +97,7 @@ impl InstructionDecoder {
             AddressingMode::Register => format!("R{}", argument),
             AddressingMode::Relative => {
                 if (argument & 0x400) != 0 {
-                    // Negative (sign extend)
+                    // negative (sign extend)
                     let offset = argument | 0xF800;
                     format!("{}", offset as i16)
                 } else {
