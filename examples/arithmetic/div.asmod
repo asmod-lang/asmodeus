@@ -1,3 +1,6 @@
+; example: Simple division program (iterative) 
+; Calculates 25 + 17 and outputs the result
+
 LOOP: POB A
       ODE B
       ŁAD A

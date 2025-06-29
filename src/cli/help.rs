@@ -14,6 +14,7 @@ pub fn print_help() {
     print_command("debug", "Interactive debugger with breakpoints");
     print_command("interactive", "Real-time character I/O mode");
     print_command("live", "Alias for interactive mode");
+    print_command("examples", "Manage and run example programs"); 
     println!();
     
     println!("OPTIONS:");
@@ -34,6 +35,8 @@ pub fn print_help() {
     print_command("asmod interactive char_io.asmod", "# Real-time character I/O");
     print_command("asmod assemble program.asmod", "# Assemble to binary");
     print_command("asmod disassemble program.bin", "# Disassemble binary");
+    print_command("asmod examples list", "# List all available examples");
+    print_command("asmod examples run hello", "# Run hello example");
     print_command("asmod program.asmod", "# Run (default command)");
     println!();
     

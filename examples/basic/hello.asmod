@@ -1,4 +1,4 @@
-; Simple hello world program for Machine W
+; example: Hello world 
 ; Outputs the value 42 and stops
 
 start:

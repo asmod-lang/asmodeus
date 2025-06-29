@@ -1,4 +1,4 @@
-; Count '$' characters in input
+; example: '$' counter
 ; Reads characters until count reaches threshold
 
 start:

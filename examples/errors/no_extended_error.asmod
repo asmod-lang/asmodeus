@@ -1,3 +1,5 @@
+; example: Reminder to turn on extended instruction set
+
 start:
     POB #10      ; AK = 10
     MNO #5       ; should cause error without the --extended flag

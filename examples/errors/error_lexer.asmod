@@ -1,4 +1,4 @@
-; File with lexical error
+; example: File with lexical error
 ; Contains invalid token that will cause lexer error
 
 start:
