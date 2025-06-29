@@ -2,7 +2,7 @@
 
 use lexariel::tokenize;
 use parseid::parse;
-use hephasm::assemble_program;
+use hephasm::{assemble_program, assemble_program_extended};
 
 use crate::error::AsmodeusError;
 use crate::cli::Args;
@@ -20,7 +20,9 @@ pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, Asmodeus
         println!("Tokenizing source code...");
     }
     
-    let tokens = tokenize(&source)?;
+    let tokens = tokenize(&source).map_err(|e| {
+        AsmodeusError::LexerError(e)
+    })?;
     
     if args.debug {
         print_tokens_debug(&tokens);
@@ -30,7 +32,9 @@ pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, Asmodeus
         println!("Parsing tokens to AST...");
     }
     
-    let ast = parse(tokens)?;
+    let ast = parse(tokens).map_err(|e| {
+        AsmodeusError::ParserError(e)
+    })?;
     
     if args.debug {
         print_ast_debug(&ast);
@@ -40,7 +44,15 @@ pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, Asmodeus
         println!("Assembling AST to machine code...");
     }
     
-    let machine_code = assemble_program(&ast)?;
+    let machine_code = if args.extended {
+        assemble_program_extended(&ast, true).map_err(|e| {
+            AsmodeusError::AssemblerError(e)
+        })?
+    } else {
+        assemble_program(&ast).map_err(|e| {
+            AsmodeusError::AssemblerError(e)
+        })?
+    };
     
     if args.verbose {
         println!("Generated {} words of machine code", machine_code.len());
