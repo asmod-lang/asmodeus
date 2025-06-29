@@ -11,13 +11,13 @@ use crate::debug::{print_tokens_debug, print_ast_debug};
 
 pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, AsmodeusError> {
     if args.verbose {
-        println!("Reading source file: {}", input_path);
+        println!("📖 Reading source file: {}", input_path);
     }
     
     let source = read_file(input_path)?;
     
     if args.verbose {
-        println!("Tokenizing source code...");
+        println!("🔤 Tokenizing source code...");
     }
     
     let tokens = tokenize(&source).map_err(|e| {
@@ -29,7 +29,7 @@ pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, Asmodeus
     }
     
     if args.verbose {
-        println!("Parsing tokens to AST...");
+        println!("🌳 Parsing tokens to AST...");
     }
     
     let ast = parse(tokens).map_err(|e| {
@@ -41,7 +41,7 @@ pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, Asmodeus
     }
     
     if args.verbose {
-        println!("Assembling AST to machine code...");
+        println!("⚙️ Assembling AST to machine code...");
     }
     
     let machine_code = if args.extended {
@@ -55,7 +55,7 @@ pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, Asmodeus
     };
     
     if args.verbose {
-        println!("Generated {} words of machine code", machine_code.len());
+        println!("✅ Assembly completed successfully. Generated {} words.", machine_code.len());
     }
     
     Ok(machine_code)
