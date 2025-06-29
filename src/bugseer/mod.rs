@@ -6,4 +6,3 @@ mod help;
 mod address_parser;
 
 pub use debugger_loop::interactive_debugger_loop;
-pub use help::print_debugger_help;

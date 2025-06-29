@@ -1,5 +1,5 @@
 use std::io::{self, Write};
-use asmachina::{MachineW, MachineError};
+use asmachina::{MachineW};
 use crate::error::AsmodeusError;
 use crate::debug::print_machine_state;
 use super::{command_handlers, help};

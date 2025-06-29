@@ -6,7 +6,7 @@ mod direct_parser;
 mod validator;
 
 use lexariel::TokenKind;
-use crate::ast::{Operand, AddressingMode};
+use crate::ast::{Operand};
 use crate::error::ParserError;
 use crate::token_navigator::TokenNavigator;
 use immediate_parser::ImmediateParser;
