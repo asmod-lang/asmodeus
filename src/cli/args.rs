@@ -10,7 +10,7 @@ pub enum Mode {
     Help,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Args {
     pub mode: Mode,
     pub input_file: Option<String>,
@@ -18,4 +18,5 @@ pub struct Args {
     pub verbose: bool,
     pub debug: bool,
     pub extended: bool,
+    pub watch: bool,
 }
