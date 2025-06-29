@@ -1,9 +1,11 @@
 //! lex → parse → assemble → run
-
 use asmachina::MachineW;
 use lexariel::tokenize;
 use parseid::parse;
 use hephasm::assemble_program;
+use std::process::Command;
+use std::fs;
+use tempfile::TempDir;
 
 #[test]
 fn test_complete_pipeline_simple() {
@@ -265,4 +267,139 @@ fn test_large_program_integration() {
 
     // 1+2+...+100 = 5050
     assert_eq!(machine.get_output_buffer(), &[5050]);
+}
+
+fn get_binary_path() -> String {
+    let target_dir = if cfg!(debug_assertions) {
+        "target/debug"
+    } else {
+        "target/release"
+    };
+    format!("{}/asmodeus", target_dir)
+}
+
+#[test]
+fn test_full_pipeline_extended_instructions() {
+    let temp_dir = TempDir::new().unwrap();
+    let source_file = temp_dir.path().join("pipeline_test.asmod");
+    let binary_file = temp_dir.path().join("pipeline_test.bin");
+    let disasm_file = temp_dir.path().join("pipeline_test_disasm.asmod");
+    
+    let original_program = r#"
+        ; Pipeline test with extended instructions
+        start:
+            POB value1     ; load 12
+            MNO value2     ; multiply by 5 = 60
+            DZI #4         ; divide by 4 = 15
+            MOD #8         ; modulo 8 = 7
+            WYJSCIE        ; output 7
+            STP
+            
+        value1: RST 12
+        value2: RST 5
+    "#;
+    
+    fs::write(&source_file, original_program).unwrap();
+    
+    // with extended flag
+    let assemble_output = Command::new("cargo")
+        .args(&["run", "--", "assemble", "--extended", source_file.to_str().unwrap(), "-o", binary_file.to_str().unwrap()])
+        .output()
+        .expect("Failed to execute assembler");
+    
+    assert!(assemble_output.status.success(), "Assembly failed: {}", String::from_utf8_lossy(&assemble_output.stderr));
+    assert!(binary_file.exists(), "Binary file not created");
+    
+    // use source
+    let run_output = Command::new("cargo")
+        .args(&["run", "--", "run", "--extended", source_file.to_str().unwrap()])
+        .output()
+        .expect("Failed to execute run command");
+    
+    assert!(run_output.status.success(), "Run failed: {}", String::from_utf8_lossy(&run_output.stderr));
+    
+    let stdout = String::from_utf8_lossy(&run_output.stdout);
+    assert!(stdout.contains("7"), "Expected output '7', got: {}", stdout);
+    
+    // use binary
+    let disasm_output = Command::new("cargo")
+        .args(&["run", "--", "disassemble", binary_file.to_str().unwrap(), "-o", disasm_file.to_str().unwrap()])
+        .output()
+        .expect("Failed to execute disassembler");
+    
+    assert!(disasm_output.status.success(), "Disassembly failed: {}", String::from_utf8_lossy(&disasm_output.stderr));
+    assert!(disasm_file.exists(), "Disassembly file not created");
+    
+    // verify
+    let disassembled_content = fs::read_to_string(&disasm_file).unwrap();
+    assert!(disassembled_content.contains("MNO"), "Disassembly should contain MNO");
+    assert!(disassembled_content.contains("DZI"), "Disassembly should contain DZI");
+    assert!(disassembled_content.contains("MOD"), "Disassembly should contain MOD");
+
+    let has_immediate = disassembled_content.contains("#4") || disassembled_content.contains("#8") || 
+                       disassembled_content.contains("4") || disassembled_content.contains("8");
+    assert!(has_immediate, "Disassembly should contain immediate values");
+}
+
+#[test]
+fn test_error_propagation_extended_mode() {
+    let temp_dir = TempDir::new().unwrap();
+    let source_file = temp_dir.path().join("error_test.asmod");
+    
+    // division by zero
+    let program_with_error = r#"
+        start:
+            POB value      ; load 42
+            DZI #0         ; divide by zero (should error)
+            STP
+            
+        value: RST 42
+    "#;
+    
+    fs::write(&source_file, program_with_error).unwrap();
+    
+    // should fail with division by zero during execution
+    let run_output = Command::new("cargo")
+        .args(&["run", "--", "run", "--extended", source_file.to_str().unwrap()])
+        .output()
+        .expect("Failed to execute run command");
+    
+    assert!(!run_output.status.success(), "Run should fail due to division by zero");
+    
+    let stderr = String::from_utf8_lossy(&run_output.stderr);
+    assert!(stderr.contains("DivisionByZero") || stderr.contains("Division by zero"), 
+            "Error message should mention division by zero: {}", stderr);
+}
+
+#[test]
+fn test_mixed_standard_extended_pipeline() {
+    let temp_dir = TempDir::new().unwrap();
+    let source_file = temp_dir.path().join("mixed_test.asmod");
+    
+    let mixed_program = r#"
+        ; Mixed instruction test: (10 + 5) * 3 / 2 % 7 = 1
+        start:
+            POB value1     ; load 10 (standard)
+            DOD value2     ; add 5 = 15 (standard)
+            MNO #3         ; multiply by 3 = 45 (extended)
+            DZI #2         ; divide by 2 = 22 (extended)
+            MOD #7         ; modulo 7 = 1 (extended)
+            WYJSCIE        ; output result (standard)
+            STP            ; stop (standard)
+            
+        value1: RST 10
+        value2: RST 5
+    "#;
+    
+    fs::write(&source_file, mixed_program).unwrap();
+    
+    let run_output = Command::new("cargo")
+        .args(&["run", "--", "run", "--extended", source_file.to_str().unwrap()])
+        .output()
+        .expect("Failed to execute run command");
+    
+    assert!(run_output.status.success(), "Run failed: {}", String::from_utf8_lossy(&run_output.stderr));
+    
+    let stdout = String::from_utf8_lossy(&run_output.stdout);
+    assert!(stdout.contains("1"), "Expected output '1', got: {}", stdout);
 }
