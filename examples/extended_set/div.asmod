@@ -1,0 +1,5 @@
+start:
+    POB #100     ; AK=100 
+    DZI #4       ; / 4 (25)
+    WYJSCIE
+    STP

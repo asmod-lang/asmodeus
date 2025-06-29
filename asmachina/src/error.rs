@@ -12,8 +12,8 @@ pub enum MachineError {
     StackOverflow,
     #[error("Stack underflow")]
     StackUnderflow,
-    #[error("Division by zero")]
-    DivisionByZero,
+    #[error("Division by zero at address {address}")]
+    DivisionByZero { address: u16 },
     #[error("Input/Output error: {message}")]
     IoError { message: String },
     #[error("Breakpoint hit at address {address}")]

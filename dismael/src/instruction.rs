@@ -39,6 +39,12 @@ impl InstructionDecoder {
                 0b01101 => ("PWR".to_string(), None, false),
                 0b01110 => ("WEJSCIE".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
                 0b01111 => ("WYJSCIE".to_string(), Some(self.format_operand(argument, AddressingMode::Direct)), false),
+
+                // extended instructions
+                0b10001 => ("MNO".to_string(), Some(self.format_operand(argument, addressing_mode)), false),
+                0b10010 => ("DZI".to_string(), Some(self.format_operand(argument, addressing_mode)), false),
+                0b10011 => ("MOD".to_string(), Some(self.format_operand(argument, addressing_mode)), false),
+
                 _ => {
                     return Err(DisassemblerError::InvalidOpcode { 
                         opcode: opcode as u8, 

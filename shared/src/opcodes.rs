@@ -16,6 +16,11 @@ pub enum Opcode {
     WEJSCIE = 0b01110, // Input Operation 
     WYJSCIE = 0b01111, // Output Operation 
     SOZ = 0b10000,    // Jump if Zero 
+
+    // extended opcodes (instruction set)
+    MNO = 0b10001,    // Multiply (Extended)
+    DZI = 0b10010,    // Divide (Extended)
+    MOD = 0b10011,    // Modulo (Extended)
 }
 
 impl Opcode {
@@ -38,6 +43,11 @@ impl Opcode {
             0b01110 => Some(Self::WEJSCIE),
             0b01111 => Some(Self::WYJSCIE),
             0b10000 => Some(Self::SOZ),
+
+            // extended opcodes
+            0b10001 => Some(Self::MNO),    // Multiply (Extended)
+            0b10010 => Some(Self::DZI),    // Divide (Extended)
+            0b10011 => Some(Self::MOD),    // Modulo (Extended)
             _ => None,
         }
     }
@@ -46,6 +56,14 @@ impl Opcode {
         match self {
             Self::STP | Self::DNS | Self::PZS | Self::SDP | Self::CZM | Self::PWR => false,
             _ => true,
+        }
+    }
+
+    /// if opcode is part of extended instruction set
+    pub fn is_extended(self) -> bool {
+        match self {
+            Self::MNO | Self::DZI | Self::MOD => true,
+            _ => false,
         }
     }
 }

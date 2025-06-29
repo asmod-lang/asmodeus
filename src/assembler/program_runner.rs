@@ -22,8 +22,8 @@ pub fn run_program(machine_code: &[u16], args: &Args) -> Result<(), AsmodeusErro
         println!();
     }
     
-    machine.run().map_err(|_e| {
-        AsmodeusError::UsageError("Program execution failed".to_string())
+    machine.run().map_err(|e| {
+        AsmodeusError::MachineError(e)
     })?;
     
     print_success("Program execution completed successfully.");

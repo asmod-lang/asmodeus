@@ -22,4 +22,6 @@ pub enum AssemblerError {
     MacroParameterMismatch { name: String, expected: usize, found: usize, line: usize },
     #[error("Memory overflow: program too large for available memory")]
     MemoryOverflow,
+    #[error("Extended instruction '{instruction}' not enabled at line {line}. Use --extended flag to enable extended instruction set")]
+    ExtendedInstructionNotEnabled { instruction: String, line: usize },
 }

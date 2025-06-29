@@ -1,0 +1,5 @@
+start:
+    POB #42      ; AK=42
+    DZI #0       ; / 0 -> should cause error!
+    WYJSCIE
+    STP

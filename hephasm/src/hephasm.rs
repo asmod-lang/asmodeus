@@ -32,6 +32,18 @@ impl Assembler {
         }
     }
 
+    pub fn new_with_extended(extended_mode: bool) -> Self {
+        Self {
+            symbol_table: SymbolTable::new(),
+            macro_processor: MacroProcessor::new(),
+            instruction_assembler: InstructionAssembler::new_with_extended(extended_mode),
+            operand_resolver: OperandResolver::new(),
+            directive_processor: DirectiveProcessor::new(),
+            memory: vec![0; 2048],
+            current_address: 0,
+        }
+    }
+
     pub fn assemble(&mut self, program: &Program) -> Result<Vec<u16>, AssemblerError> {
         self.reset();
 
