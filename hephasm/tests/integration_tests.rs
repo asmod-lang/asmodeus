@@ -17,16 +17,16 @@ fn test_complex_program() {
     assert!(!machine_code.is_empty());
     assert_eq!(machine_code.len(), 5);
     
-    // POB value (address 3)
-    let expected_pob = (0b00100u16 << 11) | 3;
+    // POB value (address 3) - direct addressing 
+    let expected_pob = (0b00100u16 << 11) | (0b000u16 << 8) | 3;
     assert_eq!(machine_code[0], expected_pob);
     
-    // ŁAD result (address 4)
-    let expected_lad = (0b00011u16 << 11) | 4;
+    // ŁAD result (address 4) - direct addressing 
+    let expected_lad = (0b00011u16 << 11) | (0b000u16 << 8) | 4;
     assert_eq!(machine_code[1], expected_lad);
-    
-    // STP
-    let expected_stp = 0b00111u16 << 11;
+
+    // STP - no operand, direct addressing with argument 0
+    let expected_stp = (0b00111u16 << 11) | (0b000u16 << 8) | 0;
     assert_eq!(machine_code[2], expected_stp);
     
     // value: RST 42
@@ -50,12 +50,12 @@ fn test_program_with_comments_and_whitespace() {
     
     assert_eq!(machine_code.len(), 3);
     
-    // DOD #10
-    let expected_dod = (0b00001u16 << 11) | 10;
+    // DOD #10 - immediate addressing
+    let expected_dod = (0b00001u16 << 11) | (0b001u16 << 8) | 10;
     assert_eq!(machine_code[0], expected_dod);
     
-    // STP
-    let expected_stp = 0b00111u16 << 11;
+    // STP - no operand, direct addressing with argument 0
+    let expected_stp = (0b00111u16 << 11) | (0b000u16 << 8) | 0;
     assert_eq!(machine_code[1], expected_stp);
     
     // data: RST 42

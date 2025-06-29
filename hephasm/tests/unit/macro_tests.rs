@@ -14,15 +14,15 @@ fn test_macro_definition_and_call() {
     
     assert_eq!(machine_code.len(), 3);
     
-    // DOD 10
-    let expected_dod1 = (0b00001u16 << 11) | 10;
+    // DOD 10, direct addressing
+    let expected_dod1 = (0b00001u16 << 11) | (0b000u16 << 8) | 10;
     assert_eq!(machine_code[0], expected_dod1);
     
-    // DOD 20
-    let expected_dod2 = (0b00001u16 << 11) | 20;
+    // DOD 20, direct addressing
+    let expected_dod2 = (0b00001u16 << 11) | (0b000u16 << 8) | 20;
     assert_eq!(machine_code[1], expected_dod2);
     
-    // STP
-    let expected_stp = 0b00111u16 << 11;
+    // STP, direct addressing with argument 0
+    let expected_stp = (0b00111u16 << 11) | (0b000u16 << 8) | 0;
     assert_eq!(machine_code[2], expected_stp);
 }

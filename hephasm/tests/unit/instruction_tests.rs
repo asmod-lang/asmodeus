@@ -5,9 +5,8 @@ fn test_simple_instruction() {
     let machine_code = assemble_source("DOD 100").unwrap();
     assert_eq!(machine_code.len(), 1);
     
-    // DOD = 0b00001, argument = 100
-    // expected: (0b00001 << 11) | 100 = 0x0864
-    let expected = (0b00001u16 << 11) | 100;
+    // DOD = 0b00001, direct addressing mode = 0b000, argument = 100
+    let expected = (0b00001u16 << 11) | (0b000u16 << 8) | 100;
     assert_eq!(machine_code[0], expected);
 }
 
@@ -16,8 +15,8 @@ fn test_instruction_without_operand() {
     let machine_code = assemble_source("STP").unwrap();
     assert_eq!(machine_code.len(), 1);
     
-    // STP opcode = 0b00111, no argument
-    let expected = 0b00111u16 << 11;
+    // STP opcode = 0b00111, direct addressing mode = 0b000, no argument
+    let expected = (0b00111u16 << 11) | (0b000u16 << 8) | 0;
     assert_eq!(machine_code[0], expected);
 }
 
@@ -60,6 +59,7 @@ fn test_soz_instruction() {
     let machine_code = assemble_source("SOZ 100").unwrap();
     assert_eq!(machine_code.len(), 1);
 
-    let expected = (0b10000u16 << 11) | 100;
+    // SOZ opcode = 0b10000, direct addressing mode = 0b000, argument = 100
+    let expected = (0b10000u16 << 11) | (0b000u16 << 8) | 100;
     assert_eq!(machine_code[0], expected);
 }

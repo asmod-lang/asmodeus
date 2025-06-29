@@ -10,16 +10,16 @@ fn test_label_resolution() {
     
     assert_eq!(machine_code.len(), 3);
     
-    // SOB should jump to address 2 (where end: is)
-    let expected_sob = (0b00101u16 << 11) | 2;
+    // SOB should jump to address 2 (where end: is), direct addressing
+    let expected_sob = (0b00101u16 << 11) | (0b000u16 << 8) | 2;
     assert_eq!(machine_code[0], expected_sob);
     
-    // DOD 100
-    let expected_dod = (0b00001u16 << 11) | 100;
+    // DOD 100, direct addressing
+    let expected_dod = (0b00001u16 << 11) | (0b000u16 << 8) | 100;
     assert_eq!(machine_code[1], expected_dod);
     
-    // STP
-    let expected_stp = 0b00111u16 << 11;
+    // STP, direct addressing with argument 0
+    let expected_stp = (0b00111u16 << 11) | (0b000u16 << 8) | 0;
     assert_eq!(machine_code[2], expected_stp);
 }
 
@@ -34,7 +34,8 @@ fn test_soz_with_label() {
     "#).unwrap();
     assert_eq!(machine_code.len(), 3);
 
-    let expected_soz = (0b10000u16 << 11) | 2;
+    // SOZ should jump to address 2 (where end: is), direct addressing
+    let expected_soz = (0b10000u16 << 11) | (0b000u16 << 8) | 2;
     assert_eq!(machine_code[0], expected_soz);
 }
 
