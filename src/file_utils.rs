@@ -1,5 +1,3 @@
-//! File operations and validation utilities
-
 use std::fs;
 use std::path::Path;
 use crate::error::AsmodeusError;
@@ -11,12 +9,11 @@ pub fn validate_file_extension(path: &str, mode: Mode) -> Result<(), AsmodeusErr
     
     match (mode.clone(), extension) {
         (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive, Some("asmod")) => Ok(()),
-        (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive, Some("asm")) => Ok(()),
         (Mode::Disassemble, Some("bin")) => Ok(()),
         (Mode::Help, _) => Ok(()), // help mode doesnt need file validation
         (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive, Some(ext)) => {
             Err(AsmodeusError::UsageError(
-                format!("Expected .asmod or .asm file, but got .{} file. Please use a valid Asmodeus source file.", ext)
+                format!("Expected .asmod or file, but got .{} file. Please use a valid Asmodeus source file.", ext)
             ))
         }
         (Mode::Disassemble, Some(ext)) => {
@@ -26,7 +23,7 @@ pub fn validate_file_extension(path: &str, mode: Mode) -> Result<(), AsmodeusErr
         }
         (_, None) => {
             Err(AsmodeusError::UsageError(
-                format!("File has no extension. Expected: .asmod/.asm for run/assemble/debug, .bin for disassemble")
+                format!("File has no extension. Expected: .asmod for run/assemble/debug, .bin for disassemble")
             ))
         }
     }

@@ -35,9 +35,6 @@ pub fn print_help() {
     
     println!("SUPPORTED FILE EXTENSIONS:");
     print_info(".asmod    Asmodeus assembly source files");
-    print_info(".asm      Alternative assembly source files"); 
-    print_info(".bin      Binary machine code files");
+    print_info(".bin      Binary machine code files (with valid Asmodeus syntax)");
     println!();
-    
-    println!("\x1b[1m\x1b[38;5;202m🚀 Asmodeus - Your Machine W Development Environment\x1b[0m");
 }
