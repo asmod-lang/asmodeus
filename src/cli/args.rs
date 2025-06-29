@@ -1,0 +1,20 @@
+//! CLI argument structures and modes
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum Mode {
+    Assemble,
+    Disassemble,
+    Run,
+    Debug,
+    Interactive,
+    Help,
+}
+
+#[derive(Debug)]
+pub struct Args {
+    pub mode: Mode,
+    pub input_file: Option<String>,
+    pub output_file: Option<String>,
+    pub verbose: bool,
+    pub debug: bool,
+}
