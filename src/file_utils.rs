@@ -11,6 +11,7 @@ pub fn validate_file_extension(path: &str, mode: Mode) -> Result<(), AsmodeusErr
         (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive, Some("asmod")) => Ok(()),
         (Mode::Disassemble, Some("bin")) => Ok(()),
         (Mode::Help, _) => Ok(()), // help mode doesnt need file validation
+        (Mode::Examples, _) => Ok(()), // examples mode doesn't need file validation
         (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive, Some(ext)) => {
             Err(AsmodeusError::UsageError(
                 format!("Expected .asmod, but got .{} file. Please use a valid Asmodeus source file.", ext)

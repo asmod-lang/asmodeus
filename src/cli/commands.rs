@@ -40,6 +40,16 @@ pub fn parse_args() -> Result<Args, AsmodeusError> {
             mode = Mode::Interactive;
             i = 2;
         }
+        Some("examples") => {
+            mode = Mode::Examples;
+            
+            let sub_args: Vec<String> = args.iter().skip(2).cloned().collect();
+            if !sub_args.is_empty() {
+                input_file = Some(sub_args.join(" "));
+            }
+            
+            i = args.len();
+        }
         Some("--help") | Some("-h") => {
             mode = Mode::Help;
             i = 2;
