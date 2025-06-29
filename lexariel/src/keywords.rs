@@ -4,7 +4,8 @@
 pub(crate) fn is_keyword(word: &str) -> bool {
     matches!(word.to_uppercase().as_str(),
         "DOD" | "ODE" | "ŁAD" | "LAD" | "POB" | "SOB" | "SOM" | "SOZ" | "STP" | 
-        "DNS" | "PZS" | "SDP" | "CZM" | "MSK" | "PWR" | "WPR" | "WEJSCIE" | "WYJSCIE" | "WYJ"
+        "DNS" | "PZS" | "SDP" | "CZM" | "MSK" | "PWR" | "WPR" | "WEJSCIE" | "WYJSCIE" | "WYJ" |
+        "MNO" | "DZI" | "MOD"
     )
 }
 
