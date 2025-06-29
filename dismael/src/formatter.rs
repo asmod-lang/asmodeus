@@ -15,7 +15,8 @@ impl InstructionFormatter {
     pub fn format_instruction(&self, instruction: &DisassembledInstruction) -> String {
         let mut result = String::new();
         
-        // (without address comment for now - TODO)
+        // for debugging and reference
+        result.push_str(&format!("    ; {:04X}: {:04X}\n", instruction.address, instruction.raw_value));
         result.push_str("    ");
         result.push_str(&instruction.mnemonic);
         
