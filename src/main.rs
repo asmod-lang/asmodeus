@@ -3,7 +3,7 @@ use std::process;
 mod error;
 mod cli;
 mod file_utils;
-mod debug_utils;
+mod debug;
 mod assembler;
 mod bugseer;
 mod modes;

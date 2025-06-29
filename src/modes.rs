@@ -4,7 +4,7 @@ use crate::cli::{Args, Mode};
 use crate::file_utils::{validate_file_extension, write_binary};
 use crate::assembler::{assemble_file, run_program, disassemble_file, run_interactive_program};
 use crate::bugseer::interactive_debugger_loop;
-use crate::debug_utils::{print_machine_state, print_program_loaded_banner};
+use crate::debug::{print_machine_state, print_program_loaded_banner};
 use crate::ascii_art::{print_info, print_bugseer_logo};
 
 pub fn run_mode_assemble(args: &Args) -> Result<(), AsmodeusError> {

@@ -1,7 +1,7 @@
 use std::io::{self, Write};
 use asmachina::{MachineW, MachineError};
 use crate::error::AsmodeusError;
-use crate::debug_utils::print_machine_state;
+use crate::debug::print_machine_state;
 use super::{command_handlers, help};
 
 pub fn interactive_debugger_loop(machine: &mut MachineW) -> Result<(), AsmodeusError> {

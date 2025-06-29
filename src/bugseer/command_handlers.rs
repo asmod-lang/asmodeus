@@ -1,6 +1,6 @@
 use asmachina::{MachineW, MachineError};
 use crate::error::AsmodeusError;
-use crate::debug_utils::print_machine_state;
+use crate::debug::print_machine_state;
 use super::address_parser::parse_address;
 
 pub fn handle_step(machine: &mut MachineW) -> Result<(), AsmodeusError> {

@@ -7,7 +7,7 @@ use hephasm::assemble_program;
 use crate::error::AsmodeusError;
 use crate::cli::Args;
 use crate::file_utils::read_file;
-use crate::debug_utils::{print_tokens_debug, print_ast_debug};
+use crate::debug::{print_tokens_debug, print_ast_debug};
 
 pub fn assemble_file(input_path: &str, args: &Args) -> Result<Vec<u16>, AsmodeusError> {
     if args.verbose {
