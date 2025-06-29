@@ -30,26 +30,34 @@ impl MachineW {
 
     /// DOD - Add: (AK) + ((AD)) → AK
     fn execute_dod(&mut self) -> Result<(), MachineError> {
-        let operand = self.read_memory(self.ad)?;
+        let raw_instruction = self.memory[self.l.wrapping_sub(1) as usize];
+        let effective_address = self.resolve_effective_address(raw_instruction)?;
+        let operand = self.read_memory(effective_address)?;
         self.ak = self.ak.wrapping_add(operand);
         Ok(())
     }
 
     /// ODE - Subtract: (AK) - ((AD)) → AK  
     fn execute_ode(&mut self) -> Result<(), MachineError> {
-        let operand = self.read_memory(self.ad)?;
+        let raw_instruction = self.memory[self.l.wrapping_sub(1) as usize];
+        let effective_address = self.resolve_effective_address(raw_instruction)?;
+        let operand = self.read_memory(effective_address)?;
         self.ak = self.ak.wrapping_sub(operand);
         Ok(())
     }
 
     /// ŁAD - Store: (AK) → (AD)
     fn execute_lad(&mut self) -> Result<(), MachineError> {
-        self.write_memory(self.ad, self.ak)
+        let raw_instruction = self.memory[self.l.wrapping_sub(1) as usize];
+        let effective_address = self.resolve_effective_address(raw_instruction)?;
+        self.write_memory(effective_address, self.ak)
     }
 
     /// POB - Load: ((AD)) → AK
     fn execute_pob(&mut self) -> Result<(), MachineError> {
-        self.ak = self.read_memory(self.ad)?;
+        let raw_instruction = self.memory[self.l.wrapping_sub(1) as usize];
+        let effective_address = self.resolve_effective_address(raw_instruction)?;
+        self.ak = self.read_memory(effective_address)?;
         Ok(())
     }
 
