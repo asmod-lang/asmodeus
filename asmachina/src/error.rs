@@ -14,10 +14,12 @@ pub enum MachineError {
     StackUnderflow,
     #[error("Division by zero")]
     DivisionByZero,
-    #[error("Invalid addressing mode for instruction")]
-    InvalidAddressingMode,
     #[error("Input/Output error: {message}")]
     IoError { message: String },
     #[error("Breakpoint hit at address {address}")]
     BreakpointHit { address: u16 },
+    #[error("Invalid addressing mode: {mode}")]
+    InvalidAddressingMode { mode: u8 },
+    #[error("Invalid register number: {register} (must be 0-7)")]
+    InvalidRegister { register: u8 },
 }
