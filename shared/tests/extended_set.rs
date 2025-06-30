@@ -1,4 +1,4 @@
-use shared::opcodes::Opcode;
+use asmodeus_shared::opcodes::Opcode;
 
 #[test]
 fn test_extended_opcode_identification() {
