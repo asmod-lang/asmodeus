@@ -88,7 +88,7 @@ jobs:
     
     strategy:
       matrix:
-        package: [asmachina, lexariel, parseid, hephasm, dismael, shared]
+        package: [asmachina, lexariel, parseid, hephasm, dismael, asmodeus_shared]
     
     steps:
     - name: Checkout repository
