@@ -8,12 +8,12 @@ pub fn validate_file_extension(path: &str, mode: Mode) -> Result<(), AsmodeusErr
     let extension = path.extension().and_then(|ext| ext.to_str());
     
     match (mode.clone(), extension) {
-        (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive | Mode::Check, Some("asmod")) => Ok(()),
+        (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive | Mode::Check | Mode::Format, Some("asmod")) => Ok(()),
         (Mode::Disassemble, Some("bin")) => Ok(()),
         (Mode::Help, _) => Ok(()), // help mode doesnt need file validation
         (Mode::Examples, _) => Ok(()),
         (Mode::New, _) => Ok(()),
-        (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive | Mode::Check, Some(ext)) => {
+        (Mode::Run | Mode::Assemble | Mode::Debug | Mode::Interactive | Mode::Check | Mode::Format, Some(ext)) => {
             Err(AsmodeusError::UsageError(
                 format!("Expected .asmod, but got .{} file. Please use a valid Asmodeus source file.", ext)
             ))

@@ -10,6 +10,7 @@ pub enum Mode {
     Examples,
     New,
     Check,
+    Format,
     Help,
 }
 
