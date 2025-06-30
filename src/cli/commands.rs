@@ -64,6 +64,10 @@ pub fn parse_args() -> Result<Args, AsmodeusError> {
             mode = Mode::Check;
             i = 2;
         }
+        Some("format") => {
+            mode = Mode::Format;
+            i = 2;
+        }
         Some("--help") | Some("-h") => {
             mode = Mode::Help;
             i = 2;
