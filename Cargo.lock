@@ -223,7 +223,6 @@ name = "dismael"
 version = "0.1.0"
 dependencies = [
  "asmodeus_shared",
- "hephasm",
  "thiserror",
 ]
 

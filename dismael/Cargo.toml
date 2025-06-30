@@ -2,10 +2,15 @@
 name = "dismael"
 version = "0.1.0"
 edition = "2021"
+description = "Disassembler for Asmodeus binary files with intelligent analysis"
+license = "MIT"
+repository = "https://github.com/szymonwilczek/asmodeus"
+authors = ["Szymon Wilczek"]
+keywords = ["asmodeus", "disassembler", "machine-w", "reverse-engineering", "binary-analysis"]
+categories = ["development-tools", "compilers"]
 
 [dependencies]
+asmodeus_shared = { path = "../shared", version = "0.1.0" }
 thiserror = "1.0"
-asmodeus_shared = { path = "../shared" }
 
 [dev-dependencies]
-hephasm = { path = "../hephasm" }
