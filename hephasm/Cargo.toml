@@ -2,11 +2,17 @@
 name = "hephasm"
 version = "0.1.0"
 edition = "2021"
+description = "Assembler for Asmodeus architecture with macro support and extended instructions"
+license = "MIT"
+repository = "https://github.com/szymonwilczek/asmodeus"
+authors = ["Szymon Wilczek"]
+keywords = ["asmodeus", "assembler", "machine-w", "macros", "compilation"]
+categories = ["compilers", "development-tools"]
 
 [dependencies]
 asmodeus_shared = { path = "../shared", version = "0.1.0" }
-parseid = { path = "../parseid" }
-lexariel = { path = "../lexariel" }
+parseid = { path = "../parseid", version = "0.1.0" }
+lexariel = { path = "../lexariel", version = "0.1.0" }
 thiserror = "1.0"
 
 [dev-dependencies]
