@@ -2,6 +2,12 @@
 name = "lexariel"
 version = "0.1.0"
 edition = "2021"
+description = "Lexical analyzer for Asmodeus language"
+license = "MIT"
+repository = "https://github.com/szymonwilczek/asmodeus"
+authors = ["Szymon Wilczek"]
+keywords = ["asmodeus", "lexer", "assembly", "machine-w", "tokenizer"]
+categories = ["compilers", "parsing"]
 
 [dependencies]
 thiserror = "1.0"
