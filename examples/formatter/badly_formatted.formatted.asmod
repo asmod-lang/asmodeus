@@ -1,0 +1,26 @@
+; example: Badly formatted test file
+; This file has terrible formatting but should work
+
+start:
+    POB first            ; load first number
+    DOD second           ; add second
+    WYJSCIE
+    STP
+
+loop_label:
+    POB counter
+    SOZ end_label
+    DOD #1
+    LAD counter
+    SOB loop_label
+
+end_label:
+    STP
+
+first: RST 25
+second: RST 17
+counter: RST 5
+buffer: RPA
+data_array: RST 10
+            RST 20
+            RST 30
