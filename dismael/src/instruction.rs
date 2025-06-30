@@ -67,7 +67,7 @@ impl InstructionDecoder {
     }
 
     pub fn detect_addressing_mode(&self, instruction: u16) -> AddressingMode {
-        use shared::{extract_addressing_mode, addressing_mode_bits};
+        use asmodeus_shared::{extract_addressing_mode, addressing_mode_bits};
         
         let mode_bits = extract_addressing_mode(instruction);
         

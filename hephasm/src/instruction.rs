@@ -2,7 +2,7 @@
 
 use crate::error::AssemblerError;
 use parseid::ast::{Instruction, AddressingMode};
-use shared::{addressing_mode_bits, encode_instruction};
+use asmodeus_shared::{addressing_mode_bits, encode_instruction};
 
 pub struct InstructionAssembler {
     extended_mode: bool,

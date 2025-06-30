@@ -77,7 +77,7 @@ checksum = "e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487"
 name = "asmachina"
 version = "0.1.0"
 dependencies = [
- "shared",
+ "asmodeus_shared",
  "thiserror",
 ]
 
@@ -87,6 +87,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "asmachina",
+ "asmodeus_shared",
  "chrono",
  "clap",
  "dismael",
@@ -94,10 +95,13 @@ dependencies = [
  "hephasm",
  "lexariel",
  "parseid",
- "shared",
  "tempfile",
  "thiserror",
 ]
+
+[[package]]
+name = "asmodeus_shared"
+version = "0.1.0"
 
 [[package]]
 name = "autocfg"
@@ -218,8 +222,8 @@ checksum = "773648b94d0e5d620f64f280777445740e61fe701025087ec8b57f45c791888b"
 name = "dismael"
 version = "0.1.0"
 dependencies = [
+ "asmodeus_shared",
  "hephasm",
- "shared",
  "thiserror",
 ]
 
@@ -288,9 +292,9 @@ checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 name = "hephasm"
 version = "0.1.0"
 dependencies = [
+ "asmodeus_shared",
  "lexariel",
  "parseid",
- "shared",
  "thiserror",
 ]
 
@@ -455,10 +459,6 @@ name = "rustversion"
 version = "1.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8a0d197bd2c9dc6e53b84da9556a69ba4cdfab8619eb41a8bd1cc2027a0f6b1d"
-
-[[package]]
-name = "shared"
-version = "0.1.0"
 
 [[package]]
 name = "shlex"

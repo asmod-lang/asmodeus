@@ -1,5 +1,5 @@
 use crate::error::MachineError;
-use shared::{extract_opcode, extract_argument};
+use asmodeus_shared::{extract_opcode, extract_argument};
 use super::MachineW;
 
 impl MachineW {

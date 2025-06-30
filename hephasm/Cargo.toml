@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-shared = { path = "../shared" }
+asmodeus_shared = { path = "../shared" }
 parseid = { path = "../parseid" }
 lexariel = { path = "../lexariel" }
 thiserror = "1.0"

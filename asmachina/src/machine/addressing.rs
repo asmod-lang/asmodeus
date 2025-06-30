@@ -1,11 +1,11 @@
 use crate::error::MachineError;
-use shared::addressing_mode_bits;
+use asmodeus_shared::{addressing_mode_bits, extract_addressing_mode};
 use super::MachineW;
 
 impl MachineW {
     /// resolves an operand address based on addressing mode
     pub(crate) fn resolve_effective_address(&self, instruction_code: u16) -> Result<u16, MachineError> {
-        let addressing_mode_bits = shared::extract_addressing_mode(instruction_code);
+        let addressing_mode_bits = extract_addressing_mode(instruction_code);
         
         match addressing_mode_bits {
             bits if bits == addressing_mode_bits::DIRECT => {

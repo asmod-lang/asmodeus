@@ -1,6 +1,6 @@
 use crate::error::MachineError;
 use crate::machine::MachineW;
-use shared::{extract_addressing_mode, addressing_mode_bits};
+use asmodeus_shared::{extract_addressing_mode, addressing_mode_bits};
 
 impl MachineW {
     /// DOD - Add: (AK) + ((AD)) → AK
