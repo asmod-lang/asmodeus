@@ -53,17 +53,11 @@ impl Opcode {
     }
 
     pub fn requires_operand(self) -> bool {
-        match self {
-            Self::STP | Self::DNS | Self::PZS | Self::SDP | Self::CZM | Self::PWR => false,
-            _ => true,
-        }
+        !matches!(self, Self::STP | Self::DNS | Self::PZS | Self::SDP | Self::CZM | Self::PWR)
     }
 
     /// if opcode is part of extended instruction set
     pub fn is_extended(self) -> bool {
-        match self {
-            Self::MNO | Self::DZI | Self::MOD => true,
-            _ => false,
-        }
+        matches!(self, Self::MNO | Self::DZI | Self::MOD)
     }
 }
