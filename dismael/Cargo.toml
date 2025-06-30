@@ -1,6 +1,6 @@
 [package]
 name = "dismael"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Disassembler for Asmodeus binary files with intelligent analysis"
 license = "MIT"
