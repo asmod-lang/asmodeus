@@ -12,16 +12,22 @@ members = [
 name = "asmodeus"
 version = "0.1.0"
 edition = "2021"
-description = "Complete assembler and emulator for Machine W architecture"
+authors = ["Szymon Wilczek"]
+description = "Complete assembler and emulator for Asmodeus architecture"
 license = "MIT"  
 repository = "https://github.com/szymonwilczek/asmodeus"
+documentation = "https://docs.rs/asmodeus"
+homepage = "https://github.com/szymonwilczek/asmodeus"
+readme = "README.md"
+keywords = ["asmodeus", "assembler", "emulator", "assembly", "machine-w", "educational"]
+categories = ["command-line-utilities", "development-tools", "emulators", "compilers"]
 
 [dependencies]
 asmachina = { path = "asmachina", version = "0.1.0" }
 lexariel = { path = "lexariel", version = "0.1.0" }
 parseid = { path = "parseid", version = "0.1.0" }
 hephasm = { path = "hephasm", version = "0.1.0" }
-dismael = { path = "dismael", version = "0.1.0" }
+dismael = { path = "dismael", version = "0.1.1" }
 asmodeus_shared = { path = "shared", version = "0.1.0" }
 clap = { version = "4.0", features = ["derive"] }
 anyhow = "1.0"
