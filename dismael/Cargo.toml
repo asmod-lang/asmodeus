@@ -10,6 +10,7 @@ keywords = ["asmodeus", "disassembler", "machine-w", "reverse-engineering", "bin
 categories = ["development-tools", "compilers"]
 
 [dependencies]
+hephasm = { path = "../hephasm", version = "0.1.0" }
 asmodeus_shared = { path = "../shared", version = "0.1.0" }
 thiserror = "1.0"
 
