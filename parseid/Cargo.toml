@@ -2,9 +2,15 @@
 name = "parseid"
 version = "0.1.0"
 edition = "2021"
+description = "Parser for Asmodeus language with AST generation"
+license = "MIT"
+repository = "https://github.com/szymonwilczek/asmodeus"
+authors = ["Szymon Wilczek"]
+keywords = ["asmodeus", "parser", "ast", "assembly", "machine-w"]
+categories = ["compilers", "parsing"]
 
 [dependencies]
-lexariel = { path = "../lexariel" }
+lexariel = { path = "../lexariel", version = "0.1.0" }
 thiserror = "1.0"
 
 [dev-dependencies]
