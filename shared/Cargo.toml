@@ -2,3 +2,11 @@
 name = "shared"
 version = "0.1.0"
 edition = "2021"
+description = "Shared utilities and types for the Asmodeus Machine W ecosystem"
+license = "MIT"
+repository = "https://github.com/szymonwilczek/asmodeus"
+authors = ["Szymon Wilczek"]
+keywords = ["asmodeus","machine-w", "assembler", "utilities"]
+categories = ["development-tools"]
+
+[dependencies]
