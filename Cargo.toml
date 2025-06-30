@@ -19,7 +19,7 @@ repository = "https://github.com/szymonwilczek/asmodeus"
 documentation = "https://docs.rs/asmodeus"
 homepage = "https://github.com/szymonwilczek/asmodeus"
 readme = "README.md"
-keywords = ["asmodeus", "assembler", "emulator", "assembly", "machine-w", "educational"]
+keywords = ["asmodeus", "assembler", "emulator", "assembly", "machine-w"]
 categories = ["command-line-utilities", "development-tools", "emulators", "compilers"]
 
 [dependencies]
