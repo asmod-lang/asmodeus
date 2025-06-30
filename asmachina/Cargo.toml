@@ -2,6 +2,12 @@
 name = "asmachina"
 version = "0.1.0"
 edition = "2021"
+description = "Machine W emulator core - 16-bit architecture with full instruction set support"
+license = "MIT"
+repository = "https://github.com/szymonwilczek/asmodeus"
+authors = ["Szymon Wilczek"]
+keywords = ["asmodeus", "emulator", "machine-w", "16-bit", "architecture"]
+categories = ["emulators", "development-tools"]
 
 [dependencies]
 asmodeus_shared = { path = "../shared", version = "0.1.0" }
